@@ -17,6 +17,7 @@
 - [ ] 截图发Twitter不会被说"又是AI做的"
 - [ ] 每个section布局形式不同
 - [ ] clamp()做fluid sizing
+- [ ] 没有使用任何HTML默认样式（默认blockquote、默认border-left引用、无样式ul/ol、默认table）——所有组件必须从components.md选用
 
 ---
 

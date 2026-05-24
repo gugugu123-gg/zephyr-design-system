@@ -105,6 +105,7 @@
 | 装饰 | glassmorphism、圆角矩形+阴影千篇一律、渐变文字、AI光效 |
 | 整体 | 看起来像AI生成的通用模板、generic Landing Page模板感 |
 | 图片 | AI生成的stock photo风、过度滤镜、无意义装饰图 |
+| 默认样式 | HTML默认blockquote、默认border-left引用块、无样式ul/ol列表、默认table——所有组件必须从components.md选用，绝不允许浏览器默认渲染 |
 
 ### 自检问题
 做完设计后问自己：
