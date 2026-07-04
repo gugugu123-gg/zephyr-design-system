@@ -44,6 +44,14 @@
 
 ---
 
+### 📱 公众号排版
+
+杂志编号风：全内联样式 + section 标签，复制粘贴进微信公众号编辑器即可。
+
+🔗 [在线预览](https://esthersjw.github.io/esther-design-system/assets/demo-wechat.html)
+
+---
+
 ### 🧩 组件库全览
 
 30+ 经过验证的可复用组件。
@@ -89,7 +97,8 @@ esther-design-system/
     ├── scene-tutorial.md           教程场景规范
     ├── scene-landing.md            活动页场景规范
     ├── scene-app.md                App型场景规范
-    └── scene-cards.md              小红书卡片场景规范
+    ├── scene-cards.md              小红书卡片场景规范
+    └── scene-wechat.md             公众号排版场景规范
 ```
 
 ---
@@ -100,7 +109,7 @@ AI 每次做设计必须按这个顺序走：
 
 | # | 做什么 | 为什么 |
 |---|--------|--------|
-| 1 | 问 5 个问题(类型/受众/几屏/素材/约束) | 不自作主张 |
+| 1 | 问 5 个问题(类型/受众/几屏/素材/约束)。类型含：教程/活动页/App/卡片/**公众号** | 不自作主张 |
 | 2 | 读 brand-dna + 对应场景文件 | 先学规矩再动手 |
 | 3 | 从 assets/ 复制对应模板 | 从半成品开始，不从零写 |
 | 4 | 从 layouts.md 选 3-5 种布局 | 每个 section 不能一样 |
