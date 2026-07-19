@@ -1,114 +1,166 @@
 ---
 name: zephyr-design-system
-description: 基于 ESTHER 不二设计系统改造的个人 Design Skill。做HTML页面、个人网站、教程页面、介绍页面、landing page、图文卡片等前端设计时自动触发。包含品牌DNA、风格库和多个场景子规范。
+description: 可扩展的个人 AI Design Operating System。用于设计或重构网页、Landing Page、App、教程、文章、社交媒体卡片、演示文稿及其他视觉界面；通过 Brand DNA、Scene、Audience、Layout、Component 五层规范生成可执行设计，并按质量清单验证。用户提出做页面、做图文、设计界面、选择视觉风格、扩展品牌主题或维护本设计系统时使用。
 ---
 
-> © 2026 ESTHER不二 (esthersjw) | CC BY-NC-SA 4.0
-> 使用本 Skill 需署名原作者，禁止商用，修改后须以相同协议分享。
-> Repo: https://github.com/gugugu123-gg/zephyr-design-system
+# Zephyr Design System
 
-触发条件：当用户要求制作HTML网页、个人页面、教程页面、介绍型页面、landing page、活动页面、App型页面、作品集等任何前端设计相关任务时触发。也在用户说"做图文"、"图文卡片"、"小红书图文"、"文章转卡片"、"转成图文"、"做卡片"时触发。
+把每个设计任务解析为：
 
-## 使用方式（8步工作流）
+`Brand DNA × Scene × Audience → Layouts + Components → Output`
 
-### Step 1: 先给用户选择菜单
-在动手前，先告诉用户本 Skill 当前支持哪些设计方式和排版方式，不要直接开始写页面。
+- **Brand DNA**：视觉身份。控制颜色、字体、图形、图片、动效和禁忌。
+- **Scene**：内容类型。控制目标、信息结构和叙事顺序。
+- **Audience**：目标受众。控制语言、密度、证据和可访问性。
+- **Layout**：信息组织方式。控制槽位、顺序和响应式关系。
+- **Component**：语义零件。控制局部结构、状态和交互。
 
-目的：先引导用户做选择，避免直接产出造成 token 浪费，也避免用户因为审美疲劳不喜欢最终方向。
+不要让 Brand 决定内容结构，不要让 Scene 写死视觉风格。
 
-硬规则：
+## Operating Rules
 
-- 用户没有明确指定风格/排版时，不得直接开始写完整 HTML。
-- 必须先给用户一个简短菜单，让用户选择或确认。
-- 菜单只展示主要方向，不要把所有组件细节一次性倒给用户。
-- 用户选择后，再进入模板、布局、组件组合。
+1. 未确认 Brand、Scene、Audience 前，不生成完整设计或修改实现文件。
+2. 用户已明确某个维度时直接采用，不重复询问。
+3. 用户提供参考图或现有设计时，先提取可观察规则，再确认映射到现有 Brand 还是新增 Brand。
+4. 用户只说“想换风格”时，仅展示 Brand 选项并询问方向，不自行创建风格。
+5. 用户授权“你来决定”时可以推断，但在实现前必须声明 Design Contract。
+6. 推荐关系是软约束；用户硬约束、内容正确性和可访问性是硬约束。
+7. 只读取当前任务需要的文件，避免把所有规范一次装入上下文。
 
-必须展示：
+## Workflow
 
-1. **设计风格** — 读取 `references/style-library/styles-index.md`，展示可选风格。默认风格是「暖纸编辑感」。
-2. **交付类型** — 教程/介绍/科普、活动页/Landing、App型/功能型、图文卡片、公众号排版。
-3. **主要排版方向** — 从 `references/layouts.md` 中概括 5-8 个主要布局方向给用户选，例如大标题海报型、左右双栏型、编辑式错位排版、编号章节型、卡片组合型、Sticky滚动叙事型、深浅纸面交替型、时间轴/流程型。若是图文卡片，必须额外让用户在「封面型 / 信息型 / 图文型 / 混合组卡」中选择。
-4. **字体气质** — 必须让用户选择展示 HTML 的标题字体；如果任务还包含卡片封面，必须再单独让用户选择一次卡片封面字体，不能用一次选择同时覆盖两种产物。字体选项固定为：黑体 / 汇文明朝体 / 霞鹜文楷 / 思源宋体。搭配规则：黑体必须搭配汇文明朝体作为强调或副标题；霞鹜文楷和汇文明朝体只能二选一，不能在同一封面或首屏里同时作为主要标题字体。正文模式仍需确认：默认黑体无衬线 / 霞鹜文楷正文。英文大标题默认使用稳定无衬线（Arial Narrow / Helvetica Neue / Aptos Display），低反差衬线（Source Serif 4 / Libre Baskerville）只作为明确选择；禁止 Didot、Bodoni、Cormorant、高反差 Fraunces 和夸张 italic。手写/批注统一使用 Caveat，代码/终端/API Key/命令统一使用 Fira Code。
+### Step 1: Resolve Brand DNA
 
-如果用户已经明确给了参考图或指定“照这个模子”，优先按用户给的模子，不再自由发挥。
+读取 `brands/_index.md`。
 
-### Step 2: 澄清需求
-向用户确认5个问题：
-1. **类型** — 教程/介绍/科普？活动页/Landing？App型/功能型？**图文卡片？** **公众号排版？**
-2. **设计风格** — 使用哪个 `style-library` 风格？是否有参考案例？如果是抖音/小红书竖版卡片，优先展示「极简竖版观点卡」。
-3. **受众和用途** — 给谁看的？发在哪里？阅读还是传播？
-4. **Section数/页数** — 大概几屏、几页或几张卡片？
-5. **素材与硬约束** — 有哪些文案/图片/数据？必须包含什么？
-6. **字体选择** — 展示 HTML 标题字体从黑体 / 汇文明朝体 / 霞鹜文楷 / 思源宋体中选；正文用默认黑体还是霞鹜文楷？如果还需要卡片封面，必须再问一次“卡片封面字体”，同样从黑体 / 汇文明朝体 / 霞鹜文楷 / 思源宋体中选。
+- 展示可选 Brand 的名称、适用场景和核心气质。
+- 用户选择后读取对应 `brands/<id>.md`。
+- 用户要新增风格时，先询问定位、关键词、参考、适用与不适用场景；确认后再按 `brands/_schema.md` 创建。
 
-### Step 3: 读规范
-1. **必读** `brand-dna.md` — 确认品牌底层规范
-2. **必读** `references/style-library/styles-index.md` — 确认风格库
-3. 根据用户选择读取对应风格文件，例如 `references/style-library/styles/warm-editorial.md`
-4. 根据类型选读场景文件：
-   - 教程型/介绍型/科普型 → `references/scene-tutorial.md`
-   - 活动页/分享会/Landing → `references/scene-landing.md`
-   - App型/功能型（看板/书架/Canvas） → `references/scene-app.md`
-   - **图文卡片/小红书图文/文章转卡片** → `references/scene-cards.md`
-   - **公众号排版/做分发** → `references/scene-wechat.md`
+### Step 2: Resolve Scene
 
-### Step 4: 拷模板
-从 `assets/` 选择对应模板作为起点：
-- 教程型 → `assets/template-tutorial.html`
-- 活动页/Landing → `assets/template-landing.html`
-- App型/功能型 → `assets/template-app.html`
-- **图文卡片** → `assets/template-cards.html`
+读取 `scenes/_index.md`。
 
-**从模板开始改，不从零写。**
+- 根据用户明确的交付物映射 Scene；不明确时询问。
+- 读取对应 `scenes/<id>.md`，提取目标、必需输入和默认信息结构。
+- 一个主交付物只设一个 Primary Scene；可以声明 Secondary Scene 处理混合需求。
 
-### Step 5: 选布局组合
-从 `references/layouts.md` 中选取 3~5 种布局模式，为每个 section 分配不同布局。
+### Step 3: Resolve Audience
 
-**每个 section 布局必须不同。**
+读取 `audiences/_index.md`。
 
-（图文卡片模式：先确定封面型、信息型、图文型或混合组卡，再参考 `scene-cards.md` 中的推荐排版手法，为每页选择不同手法。）
+- 确认主受众；必要时设置一个次受众。
+- 读取对应 `audiences/<id>.md`。
+- 用 Audience 调整术语、密度、证据、字号和交互复杂度，不覆盖 Brand 身份。
 
-### Step 6: 选组件填充
-从 `references/components.md` 中选取组件填入各 section。
+### Step 4: Create Design Contract
 
-**硬规则：禁止使用任何HTML默认样式。** 所有引用块、列表、表格、卡片必须从 components.md 里选用对应组件的代码。不允许用默认 `<blockquote>`、默认 `border-left` 引用、无样式 `<ul>/<ol>`、默认 `<table>`。如果在 components.md 里找不到合适的，自己设计一个符合 brand-dna 规范的，但绝不能用浏览器默认样式。
+实现前输出并确认一份简短契约：
 
-### Step 7: 自检
-对照 `references/checklist.md` 逐条检查：
-- **P0 必须全过** — 任何一条不过就要改
-- P1 应过 — 尽量满足
-- P2 加分 — 锦上添花
+```yaml
+brand: warm-editorial
+scene: tutorial
+audience:
+  primary: creators
+  secondary: general-readers
+delivery: responsive-html
+goal: 让创作者理解并复用一个 AI 工作流
+content_constraints: []
+asset_constraints: []
+accessibility: WCAG-AA
+```
 
-（图文卡片模式：额外对照 `scene-cards.md` 底部的 Checklist。）
+缺少会改变方向的素材或约束时先询问。不要用完整页面作为风格试错。
 
-### Step 8: 交付
-输出最终 HTML 文件，确保可直接在浏览器打开。
+### Step 5: Compose Layouts
 
-## 场景类型速查
+读取 `layouts/_index.md`，再读取候选 Layout 文件。
 
-| 类型 | 场景文件 | 模板 |
-|------|----------|------|
-| 教程型/介绍型/科普型 | `references/scene-tutorial.md` | `assets/template-tutorial.html` |
-| 活动页/分享会/Landing | `references/scene-landing.md` | `assets/template-landing.html` |
-| App型/功能型 | `references/scene-app.md` | `assets/template-app.html` |
-| 图文卡片/小红书图文 | `references/scene-cards.md` | `assets/template-cards.html` |
-| 公众号排版 | `references/scene-wechat.md` | `assets/template-wechat.html` |
+1. 按 Scene 的信息结构为每个 section 分配 Layout。
+2. 连续 section 避免相同构图，除非重复本身有比较或系列语义。
+3. 用 Audience 调整列数、密度、阅读顺序和披露深度。
+4. 记录 section map：
 
-## 关键原则
-- **从模板开始改，不从零写** — 模板已内置品牌变量和基础结构
-- **先给用户选择菜单** — 先展示风格、交付类型、排版方向，再动手
-- **主动引导用户** — 用户没选清楚时先收敛方向，不用完整页面试错
-- **风格库可扩展** — 新风格、新案例、新描述统一放入 `references/style-library/`
-- **默认纸张编辑风** — 使用亚麻米白纸张背景、轻微颗粒、黑色排版、黄色局部高亮和少量编辑红批注，视觉效果主要靠排版、字号、字重和留白
-- **中文字体必须分别选择** — 展示 HTML 标题和卡片封面标题是两个不同选择，不能只问一次；选项固定为黑体 / 汇文明朝体 / 霞鹜文楷 / 思源宋体；正文通过 `--font-body` 在默认黑体和霞鹜文楷之间选择
-- **中文字体搭配限制** — 黑体必须搭配汇文明朝体；霞鹜文楷和汇文明朝体在同一封面/首屏里只能二选一，不能都作为主要标题字体
-- **全局英文字体规则** — 英文大标题默认用 Arial Narrow / Helvetica Neue / Aptos Display；低反差衬线只用 Source Serif 4 / Libre Baskerville；禁止 Didot、Bodoni、Cormorant、高反差 Fraunces 和夸张 italic；手写/批注用 Caveat，代码/终端/API Key/命令用 Fira Code
-- **红色批注必须有语义** — 红圈只能圈具体词、短语、数字、按钮或核心句，不能悬空圈空白；没有明确对象时改用短下划线、小箭头或直接删除
-- **封面页禁止装饰编号** — 封面页/首屏只保留必要小标签文本，禁止装饰性数字、水印数字和重复编号图形；不要在封面卡片或首屏右上角放淡色编号当装饰
-- **卡片必须整体化** — 图文卡片使用整体式信息卡，不堆多层小框；主卡片圆角约 22px，图片/顶部视觉区约 20px，小标签约 14px；边框用低对比 1px 细线，阴影很弱或不用；层级靠留白、分区、细分隔线和局部批注建立
-- **禁止大面积彩色结构** — 不使用粗黄色外框、整屏编辑红背景、大面积黄色卡片底；黄色和编辑红只能做局部强调
-- **每个 section 布局必须不同** — 避免单调重复，从 layouts.md 选不同模式
-- **做完必须跑 checklist** — P0 全过才能交付
+```text
+Hero -> hero
+Concept -> two-column
+Process -> step-flow
+Example -> comparison
+Summary -> hero
+```
 
-## 禁忌
-严格遵守 `brand-dna.md` 的禁忌清单，不在此重复。核心底线：截图发 Twitter 不会被说"又是AI做的"。
+### Step 6: Select Components
+
+读取 `components/_index.md`，只读取被选中的组件文件。
+
+- 每个组件必须服务于信息或操作，不为填空而添加。
+- 使用组件定义的结构、状态与无障碍要求。
+- 再应用当前 Brand 的视觉适配。
+- 需要旧版 HTML/CSS 实现片段时，可选读 `references/components.md`，但必须按当前 Brand 重绘。
+
+### Step 7: Read Assets and Generate
+
+根据 Scene 从 `scenes/_index.md` 选择起始模板。模板不匹配时可以新建实现，但保留 Design Contract。
+
+生成顺序：
+
+1. 内容骨架
+2. 语义 HTML 与交互状态
+3. Layout 响应式结构
+4. Brand tokens 与组件适配
+5. 图片、图标和真实数据
+6. 动效与减弱动效
+
+不得使用浏览器默认样式交付引用、列表、表格、代码或交互控件。不得伪造评价、数据、产品状态或素材来源。
+
+### Step 8: Validate
+
+读取 `references/checklist.md`。
+
+- P0 全部通过后才能交付。
+- 再执行所选 Brand、Scene、Audience 和 Component 文件中的 Acceptance/Delivery 要求。
+- 对 HTML 至少检查桌面和移动端截图、溢出、重叠、键盘焦点、控制台错误和关键资源加载。
+- 发现问题后修复并重新检查，不只报告问题。
+
+### Step 9: Deliver
+
+交付最终文件，并简要说明：
+
+- Design Contract
+- 使用的 Layout 与 Component
+- 验证结果
+- 仍存在的真实限制
+
+除非用户明确要求，不自动提交或推送 Git。
+
+## Conflict Priority
+
+发生冲突时按以下优先级处理：
+
+1. 用户明确的内容、媒介和业务约束
+2. 正确性、安全性、可访问性
+3. Scene 的内容目标和结构
+4. Audience 的理解与决策需求
+5. Brand 的视觉身份
+6. Layout 与 Component 默认建议
+7. 模板和旧示例
+
+如果高优先级规则迫使设计偏离 Brand，说明偏离点，不静默破坏内容。
+
+## Extension Protocol
+
+- 新 Brand：复制 `brands/_schema.md`，登记 `brands/_index.md`。
+- 新 Scene：复制 `scenes/_schema.md`，登记 `scenes/_index.md`。
+- 新 Audience：复制 `audiences/_schema.md`，登记 `audiences/_index.md`。
+- 新 Layout：复制 `layouts/_schema.md`，登记 `layouts/_index.md`。
+- 新 Component：复制 `components/_schema.md`，登记 `components/_index.md`。
+
+新增项使用小写 kebab-case ID。不得通过复制整套模板来新增风格；视觉差异应优先进入 Brand，内容差异进入 Scene。
+
+## Core Quality Principle
+
+限制低质量随机发挥，不限制有理由的创造：
+
+- 锁定语义 token、排版角色、状态含义和禁忌。
+- 允许在网格比例、构图、图像裁切和 section 节奏上变化。
+- 每个设计决定都应能追溯到内容目标、受众需求或 Brand 规则。

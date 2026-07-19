@@ -1,0 +1,7 @@
+interface:
+  display_name: "Zephyr Design System"
+  short_description: "用多品牌、场景、受众与组件规则生成可验证的高质量设计"
+  default_prompt: "Use $zephyr-design-system to define a Design Contract and create a design for my content."
+
+policy:
+  allow_implicit_invocation: true
