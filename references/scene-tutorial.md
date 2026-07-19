@@ -8,21 +8,20 @@
 
 | 用途 | 变量名 | 色值 | 说明 |
 |------|--------|------|------|
-| 主黄 | `--yellow` | `#F4D758` | 强调、装饰圆圈、连接线、badges |
-| 柔黄 | `--yellow-soft` | `#FFF3CD` | 背景块、气泡底色 |
-| 主蓝 | `--blue` | `#2B7FD8` | 英文标题、超链、重点标记 |
-| 深蓝 | `--blue-deep` | `#1E5BA8` | 大装饰字、section数字编号 |
-| 红色 | `--red` | `#E84A5F` | 点缀、高亮下划线、标签 |
-| 奶白底 | `--cream` | `#fefcf6` | 页面主背景 |
-| 深奶底 | `--cream-dark` | `#faf6eb` | section间交替背景 |
-| 墨色 | `--ink` | `#1A1A2E` | 正文主色（非纯黑） |
-| 浅墨 | `--ink-light` | `#4A4A5A` | 次要正文 |
-| 淡墨 | `--ink-faint` | `#8A8A9A` | 辅助文字、标签 |
+| 纸张底 | `--paper` | `#ECE7E2` | 页面主背景 |
+| 柔纸底 | `--paper-light` | `#F4F1EC` | 局部浅色区块 |
+| 深纸底 | `--paper-deep` | `#E4DFDA` | section 间交替背景 |
+| 墨色 | `--ink` | `#171715` | 主标题、正文、少数深色章节 |
+| 浅墨 | `--ink-soft` | `#5B5752` | 次要正文 |
+| 淡墨 | `--ink-faint` | `#8A857F` | 辅助文字、标签 |
+| 黄色 | `--yellow` | `#F3D66F` | 局部荧光笔、短线、小圆点 |
+| 编辑红 | `--red` | `#B63A3F` | 批注、圈线、箭头、小编号 |
 
 ### 色彩原则
 - 绝不用纯黑 `#000` 或纯白 `#fff`——总是带暖调
-- 主色永远是暖黄+蓝，红色只做点缀
-- 背景用径向渐变制造层次感，不要纯平色
+- 背景使用灰暖纸张底和极轻微颗粒，不要纯平色
+- 编辑红和黄色只做局部高亮，不做大面积结构
+- 编辑红只用于批注、圈线、箭头、小编号和极少量警示
 
 ---
 
@@ -30,11 +29,12 @@
 
 | 用途 | 字体 | 备注 |
 |------|------|------|
-| 英文标题/装饰 | `Fraunces` (Google Fonts) | italic用于副标题、accent文字 |
+| 英文装饰 | `Fraunces` italic | 用于英文标题、英文大字、英文装饰词、短英文标签 |
 | 中文标题首选 | `Huiwen Mincho`（汇文明朝体） | 品牌真正用的标题字体，需本地字体文件 |
 | 中文标题备选 | `Noto Serif SC` (Google Fonts) | 当无汇文明朝体时使用 |
 | 正文/UI | `Noto Sans SC` + 系统栈 `-apple-system, 'PingFang SC', 'Helvetica Neue', sans-serif` | 无衬线保证可读性 |
-| 手写装饰 | `Caveat` (Google Fonts) | 轻松标注、注释性文字 |
+| 手写/注释 | `Caveat` | 轻松标注、注释性文字 |
+| 代码/终端 | `Fira Code` | 代码块、命令、文件名、API Key |
 
 ### 字号层次（全部用 `clamp()` 做fluid sizing）
 - **Hero大标题**: `clamp(2.8rem, 7vw, 5.5rem)` — 极大，有冲击力
@@ -70,7 +70,7 @@
 7. **产品出血型Hero**: 左侧40%紧凑文字（大标题+描述+缩略图），右侧60%大图溢出右边界。图片用 `margin-right: -5vw; border-radius: 24px 0 0 24px`，grid: `grid-template-columns: 0.4fr 0.6fr`
 8. **条纹Editorial**: 条纹分割带（repeating-linear-gradient）做section分隔。内部左图右文，图片可加低饱和度滤镜。标题用Fraunces大号italic，正文小号无衬线
 9. **横向滚动时间线**: flex横排 + scroll-snap + 固定宽度卡片，适合经历展示、项目历程
-10. **全宽品牌色面板**: 背景使用蓝/黄/橙纯色，文字反白。一页最多1~2个，用于打破奶白底的节奏。禁忌：不要在品牌色面板上放蓝色文字
+10. **墨色特殊面板**: 背景使用 `#171715`，纸色文字，少量黄色点缀。一页最多1个，用于打破纸张底节奏。禁止整屏编辑红或黄色面板
 11. **对称双栏（Pain展示）**: `grid-template-columns: 1fr 1fr`，min-height: 100vh。左侧大字标题，右侧列表/解释。适合问题/痛点、before/after对比
 
 ### 间距系统
@@ -85,12 +85,12 @@
 
 ### 可用的装饰手法
 - **虚线圆圈**: `border: 2.5px dashed var(--yellow); border-radius: 50%`，半透明，大尺寸做背景
-- **渐变光晕**: `radial-gradient(ellipse, rgba(255,217,61,0.18), transparent)` 做柔和背景
-- **分割线**: `linear-gradient(90deg, transparent, var(--yellow), transparent)` 1px渐隐线
+- **背景**: 使用灰暖纸张底和极轻微颗粒，不叠加网格或光晕
+- **分割线**: 使用编辑红或黄色纯色短线，不使用渐隐线
 - **高亮标记**: `background: linear-gradient(180deg, transparent 50%, rgba(255,217,61,0.35) 50%)` 文字底部高亮
 - **大透明数字**: 超大字号 + `opacity: 0.12~0.2` 做section装饰
 - **SVG简笔画**: 用描边风格的简化示意图，不要写实截图
-- **底部色条**: `border-bottom: 4px solid var(--yellow/blue/red)` 给卡片加标识（禁止使用 border-left 竖线引用块）
+- **底部短线**: 使用短线或角标给卡片加标识，不要做满宽粗色条（禁止使用 border-left 竖线引用块）
 
 ### 条纹肌理分割（替代渐隐线做section divider）
 ```css
@@ -144,7 +144,7 @@
   content: '';
   position: absolute;
   inset: -6px;
-  border: 1.5px solid rgba(74, 125, 232, 0.2);
+  border: 1.5px solid rgba(23, 23, 21, 0.10);
   border-radius: 16px;
 }
 ```
@@ -186,7 +186,7 @@
 - `unobserve` after triggering（只触发一次）
 - 用 `.reveal-d1` ~ `.reveal-d5` 做 stagger（0.1s递增）
 - 尊重 `prefers-reduced-motion`
-- 选中文本高亮：`::selection { background: #F4D758; color: #1a1a1a; }`
+- 选中文本高亮：`::selection { background: #F3D66F; color: #1a1a1a; }`
 
 ### 动效原则
 - **只用 opacity + transform**，不要animate layout属性
@@ -197,7 +197,7 @@
 ### 明确禁止
 - ❌ 不要用 `transform: rotate()` 让元素歪着放——这是廉价的假活泼
 - ❌ 不要故意错位/偏移来制造"手工感"
-- ❌ 不要蓝底面板上放红色文字
+- ❌ 不要在深色面板上叠加强烈彩色文字
 
 ---
 
@@ -226,11 +226,11 @@
 
 ## 🧩 可发散方向
 
-- **配色微调**: 内容跟某品牌相关时可替换主蓝为品牌色，但暖黄+奶白底不变
+- **配色微调**: 内容跟某品牌相关时，外部品牌色只保留在 logo 或图片素材中，不进入页面结构色板
 - **布局组合**: 十一种布局模式自由组合
 - **装饰密度**: 轻松内容多装饰，严肃内容减少装饰只保留字体层次
 - **IP出现方式**: 不同姿势（叉腰、放大镜、坐椅子等）
-- **深色section**: 可用一个section用深色底（如 `--blue-deep`），制造节奏对比
+- **深色section**: 可用一个 section 使用墨色底（`--ink`），制造节奏对比
 - **交互**: 如果内容适合，可加hover状态、tab切换、accordion——但不要为交互而交互
 
 ---

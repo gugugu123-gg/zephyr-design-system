@@ -33,7 +33,7 @@ Tab栏 / 侧边栏导航
   top: 0;
   z-index: 100;
   height: 56px;
-  background: var(--cream, #fefcf6);
+  background: var(--cream, #ECE7E2);
   border-bottom: 1px solid rgba(26,26,26,.06);
   display: flex;
   align-items: center;
@@ -80,17 +80,14 @@ App型页面色彩更简洁：
 
 | 元素 | 色值 | 说明 |
 |------|------|------|
-| 背景 | `#fefcf6` | 保持品牌暖底 |
-| 卡片 | `#fff` | 白卡片浮于背景上 |
-| Header/Badge | `var(--blue)` | 品牌蓝做主交互色 |
-| 强调/边框 | `var(--yellow)` | 黄色做border/badge |
-| 危险操作 | `var(--red)` | 红色仅用于删除/警告 |
-| 绿色板块 | `#2d6a4f` | 特殊功能板块（如梦境/自然） |
+| 背景 | `#ECE7E2` | 灰暖纸张底 |
+| 卡片 | `rgba(255,255,255,0.48)` | 半透明纸面浮于背景上 |
+| Header/Badge | `var(--ink)` / `var(--red)` | 墨色做稳重主控，编辑红只做局部交互色 |
+| 强调/边框 | `var(--line)` / `var(--yellow)` | 默认细灰线；黄色只做小标记 |
+| 危险操作 | `var(--red)` | 编辑红只用于局部强调，删除/警告另行谨慎处理 |
 
-### 分类标签扩展色
-功能页面分类标签可使用扩展色，但总色板不超6种：
-- 所有扩展色饱和度应低于主三色
-- 白色卡片底 + 品牌色header是App页面标准配色
+### 分类标签规则
+功能页面分类标签仍使用纸面底、细灰线、墨色文字；只允许用黄色或编辑红做小点、短线、当前态和警示态。不要为分类额外引入多套颜色。
 
 ---
 
@@ -115,8 +112,8 @@ App型页面色彩更简洁：
   transition: all .2s;
 }
 .tab.active {
-  border-bottom-color: var(--blue);
-  color: var(--blue);
+  border-bottom-color: var(--red);
+  color: var(--red);
   font-weight: 600;
 }
 ```
@@ -134,7 +131,7 @@ App型页面色彩更简洁：
   justify-content: center;
 }
 .modal-content {
-  background: var(--cream, #fefcf6);
+  background: var(--cream, #ECE7E2);
   border-radius: 16px;
   padding: clamp(24px, 3vw, 40px);
   max-width: 560px;
@@ -147,7 +144,7 @@ App型页面色彩更简洁：
 ### 卡片Hover
 ```css
 .app-card {
-  background: #fff;
+  background: var(--cream);
   border-radius: 12px;
   padding: 1.25rem;
   box-shadow: 0 2px 12px rgba(0,0,0,.04);
@@ -168,12 +165,12 @@ App型页面色彩更简洁：
   padding: 10px 14px;
   font-size: 0.9rem;
   transition: border-color .2s;
-  background: #fff;
+  background: var(--cream);
 }
 .app-input:focus {
   outline: none;
-  border-color: var(--blue, #2B7FD8);
-  box-shadow: 0 0 0 3px rgba(43,127,216,0.1);
+  border-color: var(--red, #B63A3F);
+  box-shadow: 0 0 0 3px rgba(182,58,63,0.1);
 }
 ```
 
@@ -183,12 +180,11 @@ App型页面色彩更简洁：
 
 适用于白板、信息可视化、自由拖拽布局：
 
-### Grid Dot背景
+### Canvas背景
 ```css
 .canvas-grid {
   width: 100%; height: 100%;
-  background-image: radial-gradient(circle, rgba(74,124,201,0.13) 1.2px, transparent 1.2px);
-  background-size: 28px 28px;
+  background: var(--cream-dark, #F4F1EC);
 }
 ```
 
@@ -214,7 +210,7 @@ App型页面色彩更简洁：
 ### Canvas卡片（手绘感）
 ```css
 .canvas-card {
-  background: #fff;
+  background: var(--cream);
   border: 2px dashed rgba(74,124,201,0.35);
   border-radius: 16px;
   padding: 1.25rem;

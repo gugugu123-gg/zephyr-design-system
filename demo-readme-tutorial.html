@@ -17,17 +17,17 @@
     }
 
     :root { --_esther-ds: "esthersjw-v1";
-      --blue: #2B7FD8;
-      --blue-deep: #1E5BA8;
-      --yellow: #F4D758;
-      --yellow-soft: #FFF3CD;
-      --red: #E84A5F;
-      --cream: #fefcf6;
-      --cream-dark: #faf6eb;
-      --ink: #1A1A2E;
-      --ink-light: #4A4A5A;
-      --ink-faint: #8A8A9A;
-      --dark-panel: #151821;
+      --red: #B63A3F;
+
+      --yellow: #F3D66F;
+      --yellow-soft: #F4F1EC;
+
+      --cream: #ECE7E2;
+      --cream-dark: #E4DFDA;
+      --ink: #171715;
+      --ink-light: #5B5752;
+      --ink-faint: #5B5752;
+      --dark-panel: #171715;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -57,7 +57,7 @@
       top: 0; left: 0; right: 0;
       z-index: 100;
       padding: 1rem 2rem;
-      background: rgba(254,252,246,.85);
+      background: rgba(244,241,234,.85);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(26,26,26,.06);
       display: flex;
@@ -123,7 +123,7 @@
       line-height: 1.2;
     }
     .hero h1 .highlight-word {
-      background: linear-gradient(to top, rgba(244,215,88,0.4) 40%, transparent 40%);
+      background: linear-gradient(to top, rgba(243,214,111,0.4) 40%, transparent 40%);
       padding: 0 4px;
     }
     .hero .hero-desc {
@@ -146,7 +146,7 @@
     .hero-cluster .ring {
       position: absolute;
       inset: -14px;
-      border: 2.5px dashed rgba(43,127,216,0.25);
+      border: 2.5px dashed rgba(182,58,63,0.25);
       border-radius: 50%;
       animation: heroSpin 25s linear infinite;
     }
@@ -156,7 +156,7 @@
       object-fit: cover;
       position: relative;
       z-index: 2;
-      box-shadow: 0 8px 40px rgba(43,127,216,0.15);
+      box-shadow: 0 8px 40px rgba(182,58,63,0.15);
     }
     .hero-cluster .orbit-item {
       position: absolute;
@@ -185,7 +185,7 @@
       font-family: 'Fraunces', serif;
       font-style: italic;
       font-size: clamp(1.4rem, 3vw, 2rem);
-      color: var(--blue);
+      color: var(--red);
       opacity: 0.3;
       display: block;
       margin-bottom: 0.25rem;
@@ -226,8 +226,8 @@
       top: 24px;
       width: 44px; height: 44px;
       border-radius: 50%;
-      background: var(--blue);
-      color: #fff;
+      background: var(--red);
+      color: var(--cream);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -238,7 +238,7 @@
     .logic-step .step-file {
       font-family: 'Fira Code', monospace;
       font-size: 0.82rem;
-      color: var(--blue);
+      color: var(--red);
       font-weight: 500;
       margin-bottom: 6px;
     }
@@ -286,10 +286,10 @@
       padding: 28px 20px;
       background: white;
     }
-    .scene-card:nth-child(1) { border-color: rgba(43,127,216,0.3); }
-    .scene-card:nth-child(2) { border-color: rgba(244,215,88,0.5); }
-    .scene-card:nth-child(3) { border-color: rgba(232,74,95,0.3); }
-    .scene-card:nth-child(4) { border-color: rgba(43,127,216,0.2); }
+    .scene-card:nth-child(1) { border-color: rgba(182,58,63,0.3); }
+    .scene-card:nth-child(2) { border-color: rgba(243,214,111,0.5); }
+    .scene-card:nth-child(3) { border-color: rgba(182,58,63,0.3); }
+    .scene-card:nth-child(4) { border-color: rgba(182,58,63,0.2); }
     .scene-card .scene-label {
       position: absolute;
       top: -11px;
@@ -300,10 +300,10 @@
       background: var(--cream-dark);
       padding: 0 8px;
     }
-    .scene-card:nth-child(1) .scene-label { color: var(--blue); }
+    .scene-card:nth-child(1) .scene-label { color: var(--red); }
     .scene-card:nth-child(2) .scene-label { color: #9a8100; }
     .scene-card:nth-child(3) .scene-label { color: var(--red); }
-    .scene-card:nth-child(4) .scene-label { color: var(--blue-deep); }
+    .scene-card:nth-child(4) .scene-label { color: var(--red); }
     .scene-card .scene-emoji {
       font-size: 1.8rem;
       margin-bottom: 12px;
@@ -385,7 +385,7 @@
       font-family: 'Fraunces', serif;
       font-size: clamp(4rem, 10vw, 7rem);
       font-weight: 900;
-      color: var(--blue);
+      color: var(--red);
       opacity: 0.12;
       line-height: 0.85;
       display: block;
@@ -421,7 +421,7 @@
     .workflow-table .wt-row .wt-step {
       font-family: 'Fraunces', serif;
       font-weight: 700;
-      color: var(--blue);
+      color: var(--red);
       font-size: 0.9rem;
     }
     .workflow-table .wt-row .wt-action {
@@ -529,7 +529,7 @@
       border-radius: 4px;
     }
     .compare-stamp-col--dont { border-color: var(--red); }
-    .compare-stamp-col--do { border-color: var(--blue); }
+    .compare-stamp-col--do { border-color: var(--red); }
     .compare-stamp-col .compare-stamp-label {
       position: absolute;
       top: -14px;
@@ -544,7 +544,7 @@
       background: var(--cream);
     }
     .compare-stamp-col--dont .compare-stamp-label { color: var(--red); }
-    .compare-stamp-col--do .compare-stamp-label { color: var(--blue); }
+    .compare-stamp-col--do .compare-stamp-label { color: var(--red); }
     .compare-stamp-col .stamp-list {
       list-style: none;
       padding: 0;
@@ -574,7 +574,7 @@
       left: 0;
       font-size: 0.6rem;
       top: 5px;
-      color: var(--blue);
+      color: var(--red);
     }
 
     /* ====== SECTION 7: 质量检查 — Layout 7: 横向Step连接线 ====== */
@@ -590,7 +590,7 @@
       top: 32px;
       left: 32px; right: 32px;
       height: 3px;
-      background: linear-gradient(90deg, var(--red), var(--yellow), var(--blue));
+      background: var(--red);
       border-radius: 2px;
     }
     .checklist-card {
@@ -608,12 +608,12 @@
       font-weight: 700;
       position: relative;
       z-index: 1;
-      color: #fff;
+      color: var(--cream);
       margin-bottom: 20px;
     }
     .checklist-card:nth-child(1) .checklist-dot { background: var(--red); }
     .checklist-card:nth-child(2) .checklist-dot { background: var(--yellow); color: var(--ink); }
-    .checklist-card:nth-child(3) .checklist-dot { background: var(--blue); }
+    .checklist-card:nth-child(3) .checklist-dot { background: var(--red); }
     .checklist-card h3 {
       font-family: 'Huiwen Mincho', 'Noto Serif SC', serif;
       font-size: 1.1rem;
@@ -665,8 +665,8 @@
       flex-shrink: 0;
       width: 32px; height: 32px;
       border-radius: 50%;
-      background: rgba(43,127,216,0.08);
-      color: var(--blue);
+      background: rgba(182,58,63,0.08);
+      color: var(--red);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -686,7 +686,7 @@
       margin-top: clamp(32px, 4vw, 48px);
       position: relative;
       padding: 28px 24px;
-      border: 2px dashed rgba(43,127,216,0.25);
+      border: 2px dashed rgba(182,58,63,0.25);
       border-radius: 12px;
       background: white;
     }
@@ -697,7 +697,7 @@
       font-family: 'Caveat', cursive;
       font-size: 1.1rem;
       font-weight: 700;
-      color: var(--blue);
+      color: var(--red);
       background: var(--cream);
       padding: 0 10px;
     }
@@ -717,7 +717,7 @@
       color: var(--ink-faint);
     }
     .footer a {
-      color: var(--blue);
+      color: var(--red);
       text-decoration: none;
       position: relative;
     }
@@ -991,30 +991,30 @@
       <div class="brand-right reveal reveal-d1">
         <!-- Colors -->
         <div style="margin-bottom: 8px;">
-          <span style="font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--ink-faint);">IP三色 ↓</span>
+          <span style="font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--ink-faint);">Zephyr 色彩比例 ↓</span>
         </div>
         <div class="color-row">
-          <div class="color-swatch" style="background: var(--blue);"></div>
+          <div class="color-swatch" style="background: var(--red);"></div>
           <div class="color-info">
-            <span class="color-name">#2B7FD8</span>
-            <span class="color-use">蓝 — 主色调、标题、超链接</span>
-            <span class="color-ratio">60%</span>
+            <span class="color-name">#ECE7E2 / #171715</span>
+            <span class="color-use">纸色和墨色 — 背景、标题、正文</span>
+            <span class="color-ratio">90%</span>
           </div>
         </div>
         <div class="color-row">
           <div class="color-swatch" style="background: var(--yellow);"></div>
           <div class="color-info">
-            <span class="color-name">#F4D758</span>
-            <span class="color-use">黄 — 强调、装饰、高亮</span>
-            <span class="color-ratio">30%</span>
+            <span class="color-name">#F3D66F</span>
+            <span class="color-use">黄色 — 荧光笔、短线、节点</span>
+            <span class="color-ratio">7%</span>
           </div>
         </div>
         <div class="color-row">
           <div class="color-swatch" style="background: var(--red);"></div>
           <div class="color-info">
-            <span class="color-name">#E84A5F</span>
-            <span class="color-use">红 — 点缀、CTA、标签</span>
-            <span class="color-ratio">10%</span>
+            <span class="color-name">#B63A3F</span>
+            <span class="color-use">编辑红 — 批注、圈线、小编号</span>
+            <span class="color-ratio">3%</span>
           </div>
         </div>
         <!-- Fonts -->
@@ -1066,8 +1066,8 @@
         <div class="compare-stamp-col compare-stamp-col--do">
           <span class="compare-stamp-label">PREFER</span>
           <ul class="stamp-list">
-            <li>暖底背景 #fefcf6 / #faf6eb</li>
-            <li>品牌三色（蓝60 / 黄30 / 红10）</li>
+            <li>暖底背景 #ECE7E2 / #F4F1EC</li>
+            <li>品牌双色（编辑红 / 黄交替）</li>
             <li>每个section布局形式不同</li>
             <li>expo ease-out 自然减速动效</li>
             <li>手绘蜡笔感装饰、虚线圆圈</li>
@@ -1091,7 +1091,7 @@
           <span class="checklist-dot">P0</span>
           <h3>必须全过</h3>
           <ul class="check-items">
-            <li>品牌三色比例正确</li>
+            <li>品牌双色比例正确</li>
             <li>无禁忌元素</li>
             <li>暖底背景、非纯黑白</li>
             <li>衬线+无衬线混搭</li>

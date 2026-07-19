@@ -4,31 +4,71 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>图文卡片</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700;900&family=Noto+Sans+SC:wght@400;500;700;900&family=Fraunces:ital,wght@1,400;1,700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Fira+Code:wght@400;500;700&family=Libre+Baskerville:wght@400;700&family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@700;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,700&display=swap" rel="stylesheet">
 <script src="html2canvas.min.js" onerror="console.error('html2canvas failed to load')"></script>
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root { --_esther-ds: "esthersjw-v1";
-  --yellow: #F4D758;
-  --yellow-soft: #FFF3CD;
-  --blue: #2B7FD8;
-  --blue-deep: #1E5BA8;
-  --red: #E84A5F;
-  --cream: #fefcf6;
-  --cream-dark: #faf6eb;
-  --ink: #1A1A2E;
-  --ink-light: #4A4A5A;
-  --ink-faint: #8A8A9A;
+  --paper: #ECE7E2;
+  --paper-light: #F4F1EC;
+  --paper-deep: #E4DFDA;
+  --ink: #171715;
+  --ink-soft: #5B5752;
+  --ink-faint: #8A857F;
+  --yellow: #F3D66F;
+  --red: #B63A3F;
+  --line: rgba(23,23,21,0.10);
+  --surface: rgba(255,255,255,0.48);
+
+  --yellow-soft: var(--paper-light);
+  --cream: var(--paper);
+  --cream-dark: var(--paper-deep);
+  --ink-light: var(--ink-soft);
+  --font-cn-title-sans: "Source Han Sans SC", "思源黑体", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  --font-cn-title-wenkai: "LXGW WenKai", "霞鹜文楷", "Noto Serif SC", serif;
+  --font-cn-title-mincho: "Huiwen Mincho", "汇文明朝体", "Noto Serif SC", serif;
+  --font-cn-title-serif: "Source Han Serif SC", "思源宋体", "Noto Serif SC", "Songti SC", serif;
+  --font-cn-body-sans: "Source Han Sans SC", "思源黑体", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  --font-cn-body-wenkai: "LXGW WenKai", "霞鹜文楷", "Source Han Sans SC", "Noto Sans SC", sans-serif;
+  --font-title: var(--font-cn-title-wenkai);
+  --font-body: var(--font-cn-body-sans);
+  --card-radius: 22px;
+  --card-visual-radius: 20px;
+  --card-tag-radius: 14px;
+  --card-border: 1px solid rgba(23,23,21,0.08);
+  --card-shadow: none;
+  --card-padding: 40px;
+  --card-row-gap: 28px;
+  --font-en-title-sans: "Arial Narrow", "Helvetica Neue", "Aptos Display", Arial, sans-serif;
+  --font-en-title-serif: "Source Serif 4", "Libre Baskerville", Georgia, serif;
+  --font-en-display: var(--font-en-title-sans);
+  --font-hand: "Caveat", "Comic Sans MS", cursive;
+  --font-code: "Fira Code", "Cascadia Code", "Consolas", monospace;
 }
 
 body {
-  background: #e8e4de;
-  font-family: 'Noto Sans SC', sans-serif;
+  background-color: var(--paper-deep);
+  background-image:
+        linear-gradient(115deg, rgba(255,255,255,0.16), transparent 42%, rgba(23,23,21,0.018)),
+        radial-gradient(circle at 18% 22%, rgba(255,255,255,0.20), transparent 28%),
+        radial-gradient(circle at 78% 64%, rgba(23,23,21,0.020), transparent 32%);
+      background-size: auto;background-position: 0 0, 2px 3px;
+  font-family: var(--font-body);
   color: var(--ink);
   padding: 40px 20px;
 }
+
+.en-display { font-family: var(--font-en-display); font-style: normal; font-weight: 700; letter-spacing: -0.04em; }
+.hand-note { font-family: var(--font-hand); }
+code, pre, kbd, .mono { font-family: var(--font-code); }
+.title-font-wenkai { --font-title: var(--font-cn-title-wenkai); }
+.title-font-heiti { --font-title: var(--font-cn-title-sans); }
+.title-font-mincho { --font-title: var(--font-cn-title-mincho); }
+.title-font-serif { --font-title: var(--font-cn-title-serif); }
+.body-font-sans { --font-body: var(--font-cn-body-sans); }
+.body-font-wenkai { --font-body: var(--font-cn-body-wenkai); }
 
 /* ========== 导出栏 ========== */
 .export-bar {
@@ -46,8 +86,8 @@ body {
 }
 
 .export-bar button {
-  background: var(--blue);
-  color: #fff;
+  background: var(--red);
+  color: var(--cream);
   border: none;
   padding: 10px 28px;
   border-radius: 8px;
@@ -57,7 +97,7 @@ body {
   font-family: 'Noto Sans SC', sans-serif;
 }
 
-.export-bar button:hover { background: #1a6abf; }
+.export-bar button:hover { background: #B63A3F; }
 
 .export-bar .hint {
   color: #aaa;
@@ -81,13 +121,19 @@ body {
   transform: scale(0.45);
   transform-origin: top center;
   margin-bottom: -792px;
-  border-radius: 4px;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+  border-radius: var(--card-radius);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
 }
 
 /* ========== P1 封面 ========== */
 .p-cover {
   background: var(--cream);
+  background-image:
+    linear-gradient(115deg, rgba(255,255,255,0.14), transparent 44%, rgba(23,23,21,0.014)),
+    radial-gradient(circle at 24% 18%, rgba(255,255,255,0.18), transparent 30%),
+    radial-gradient(circle at 76% 72%, rgba(23,23,21,0.016), transparent 34%);
+  background-size: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -96,25 +142,28 @@ body {
 
 .p-cover .deco-top {
   position: absolute;
-  top: 0; left: 0; right: 0;
+  top: 76px; left: 90px;
+  width: 116px;
   height: 8px;
-  background: linear-gradient(90deg, var(--blue) 60%, var(--yellow) 80%, var(--red) 100%);
+  background: var(--red);
+  border-radius: 999px;
 }
 
 .p-cover .tag {
   font-size: 28px;
   font-weight: 700;
-  color: #fff;
-  background: var(--blue);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
   display: inline-block;
   padding: 8px 24px;
-  border-radius: 6px;
+  border-radius: var(--card-tag-radius);
   margin-bottom: 40px;
   letter-spacing: 2px;
 }
 
 .p-cover h1 {
-  font-family: 'Noto Serif SC', serif;
+  font-family: var(--font-title);
   font-weight: 900;
   font-size: 88px;
   line-height: 1.2;
@@ -122,7 +171,7 @@ body {
   margin-bottom: 24px;
 }
 
-.p-cover h1 .highlight { color: var(--blue); }
+.p-cover h1 .highlight { color: var(--red); }
 
 .p-cover .subtitle {
   font-size: 42px;
@@ -168,8 +217,8 @@ body {
 }
 
 .p-dark .page-num {
-  font-family: 'Fraunces', serif;
-  font-style: italic;
+  font-family: var(--font-code);
+  font-style: normal;
   font-size: 120px;
   color: var(--yellow);
   opacity: 0.15;
@@ -223,7 +272,7 @@ body {
 }
 
 .p-dark .item .text strong {
-  color: #fff;
+  color: var(--cream);
   font-weight: 700;
 }
 
@@ -233,7 +282,7 @@ body {
   left: 80px;
   right: 80px;
   height: 4px;
-  background: linear-gradient(90deg, var(--blue) 50%, var(--yellow) 75%, var(--red) 100%);
+  background: var(--red);
   border-radius: 2px;
   opacity: 0.6;
 }
@@ -241,16 +290,21 @@ body {
 /* ========== 浅色列表页 ========== */
 .p-list {
   background: var(--cream);
+  background-image:
+    linear-gradient(115deg, rgba(255,255,255,0.14), transparent 44%, rgba(23,23,21,0.014)),
+    radial-gradient(circle at 24% 18%, rgba(255,255,255,0.18), transparent 30%),
+    radial-gradient(circle at 76% 72%, rgba(23,23,21,0.016), transparent 34%);
+  background-size: auto;
   display: flex;
   flex-direction: column;
   padding: 72px 80px;
 }
 
 .p-list .page-num {
-  font-family: 'Fraunces', serif;
-  font-style: italic;
+  font-family: var(--font-code);
+  font-style: normal;
   font-size: 120px;
-  color: var(--blue);
+  color: var(--red);
   opacity: 0.12;
   position: absolute;
   top: 40px;
@@ -287,6 +341,11 @@ body {
 /* ========== 尾页 ========== */
 .p-end {
   background: var(--cream);
+  background-image:
+    linear-gradient(115deg, rgba(255,255,255,0.14), transparent 44%, rgba(23,23,21,0.014)),
+    radial-gradient(circle at 24% 18%, rgba(255,255,255,0.18), transparent 30%),
+    radial-gradient(circle at 76% 72%, rgba(23,23,21,0.016), transparent 34%);
+  background-size: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -297,16 +356,19 @@ body {
 
 .p-end .deco-bottom {
   position: absolute;
-  bottom: 0; left: 0; right: 0;
+  bottom: 72px; left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
   height: 8px;
-  background: linear-gradient(90deg, var(--blue) 60%, var(--yellow) 80%, var(--red) 100%);
+  background: var(--red);
+  border-radius: 999px;
 }
 
 .p-end .quote-mark {
-  font-family: 'Fraunces', serif;
-  font-style: italic;
+  font-family: var(--font-en-title-serif);
+  font-style: normal;
   font-size: 200px;
-  color: var(--blue);
+  color: var(--red);
   opacity: 0.15;
   line-height: 0.6;
   margin-bottom: -20px;
@@ -323,7 +385,7 @@ body {
 }
 
 .p-end .quote .highlight {
-  color: var(--blue);
+  color: var(--red);
   text-decoration: underline;
   text-decoration-color: var(--yellow);
   text-underline-offset: 8px;
@@ -348,7 +410,7 @@ body {
 
 .p-end .cta {
   font-size: 32px;
-  color: var(--blue);
+  color: var(--red);
   font-weight: 600;
   margin-bottom: 48px;
 }
@@ -452,7 +514,7 @@ async function exportAll() {
     const card = cards[i];
     card.style.transform = 'none';
     card.style.marginBottom = '0';
-    card.style.borderRadius = '0';
+    card.style.borderRadius = '22px';
     card.style.boxShadow = 'none';
 
     await new Promise(r => setTimeout(r, 150));
@@ -478,8 +540,8 @@ async function exportAll() {
     } finally {
       card.style.transform = 'scale(0.45)';
       card.style.marginBottom = '-792px';
-      card.style.borderRadius = '4px';
-      card.style.boxShadow = '0 8px 40px rgba(0,0,0,0.12)';
+      card.style.borderRadius = '22px';
+      card.style.boxShadow = 'none';
     }
   }
 

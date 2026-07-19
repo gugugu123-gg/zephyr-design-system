@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent 究竟是什么</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Fira+Code:wght@400;500;700&family=Libre+Baskerville:wght@400;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --paper: #ECE7E2;
+      --paper-light: #F4F1EC;
+      --paper-deep: #E4DFDA;
+      --ink: #171715;
+      --ink-soft: #5B5752;
+      --ink-faint: #8A857F;
+      --yellow: #F3D66F;
+      --red: #B63A3F;
+      --line: rgba(23, 23, 21, 0.10);
+      --surface: rgba(255, 255, 255, 0.48);
+      --font-cn-title-sans: "Source Han Sans SC", "思源黑体", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      --font-cn-title-wenkai: "LXGW WenKai", "霞鹜文楷", "Noto Serif SC", serif;
+      --font-cn-title-mincho: "Huiwen Mincho", "汇文明朝体", "Noto Serif SC", serif;
+      --font-cn-title-serif: "Source Han Serif SC", "思源宋体", "Noto Serif SC", "Songti SC", serif;
+      --font-cn-body-sans: "Source Han Sans SC", "思源黑体", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      --font-cn-body-wenkai: "LXGW WenKai", "霞鹜文楷", "Source Han Sans SC", "Noto Sans SC", sans-serif;
+      --font-title: var(--font-cn-title-wenkai);
+      --font-body: var(--font-cn-body-sans);
+      --font-serif: "Source Han Serif SC", "思源宋体", "Noto Serif SC", "Songti SC", "SimSun", serif;
+      --font-sans: var(--font-body);
+      --font-en-title-sans: "Arial Narrow", "Helvetica Neue", "Aptos Display", Arial, sans-serif;
+      --font-en-title-serif: "Source Serif 4", "Libre Baskerville", Georgia, serif;
+      --font-en-display: var(--font-en-title-sans);
+      --font-hand: "Caveat", "Comic Sans MS", cursive;
+      --font-code: "Fira Code", "Cascadia Code", "Consolas", monospace;
+      --font-mono: var(--font-code);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      color: var(--ink);
+      background-color: var(--paper);
+      background-image:
+        linear-gradient(115deg, rgba(255,255,255,0.16), transparent 42%, rgba(23,23,21,0.018)),
+        radial-gradient(circle at 18% 22%, rgba(255,255,255,0.20), transparent 28%),
+        radial-gradient(circle at 78% 64%, rgba(23,23,21,0.020), transparent 32%);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    ::selection { background: var(--yellow); color: var(--ink); }
+
+    a { color: inherit; text-decoration: none; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      height: 62px;
+      padding: 0 clamp(20px, 4vw, 56px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+      background: rgba(236, 231, 226, 0.88);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-en-display);
+      font-size: 0.84rem;
+      font-style: normal;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-mark {
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      color: var(--paper);
+      background: var(--red);
+      border-radius: 5px;
+      transform: rotate(45deg);
+      font-size: 17px;
+      line-height: 1;
+    }
+
+    .brand-mark span { transform: rotate(-45deg); }
+
+    .nav {
+      display: flex;
+      gap: 18px;
+      color: var(--ink-soft);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .nav a {
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+    .nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 2px;
+      background: var(--yellow);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.2s ease;
+    }
+
+    .nav a:hover::after { transform: scaleX(1); }
+
+    .wrap {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding-inline: clamp(22px, 4vw, 54px);
+    }
+
+    .hero {
+      min-height: calc(100vh - 62px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.72fr);
+      align-items: center;
+      gap: clamp(44px, 6vw, 84px);
+      padding-block: clamp(76px, 12vh, 138px);
+    }
+
+    .hero > * { min-width: 0; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      color: var(--ink-soft);
+      font-family: var(--font-en-display);
+      font-size: 0.84rem;
+      font-style: normal;
+      font-weight: 800;
+      letter-spacing: -0.015em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin-top: 28px;
+      font-family: var(--font-title);
+      font-size: clamp(4.2rem, 10.5vw, 8.8rem);
+      font-weight: 900;
+      line-height: 0.94;
+      letter-spacing: -0.05em;
+      max-width: 880px;
+    }
+
+    .en-display {
+      font-family: var(--font-en-display);
+      font-style: normal;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+    }
+
+    .hero h1 .en {
+      font-family: var(--font-en-display);
+      font-style: normal;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-agent {
+      display: block;
+      font-size: 0.9em;
+      line-height: 0.82;
+    }
+
+    .hand-note {
+      font-family: var(--font-hand);
+      font-size: 1.25em;
+      color: var(--red);
+    }
+
+    code,
+    pre,
+    kbd,
+    .mono {
+      font-family: var(--font-code);
+    }
+
+    .title-font-wenkai { --font-title: var(--font-cn-title-wenkai); }
+    .title-font-heiti { --font-title: var(--font-cn-title-sans); }
+    .title-font-mincho { --font-title: var(--font-cn-title-mincho); }
+    .title-font-serif { --font-title: var(--font-cn-title-serif); }
+    .body-font-sans { --font-body: var(--font-cn-body-sans); --font-sans: var(--font-cn-body-sans); }
+    .body-font-wenkai { --font-body: var(--font-cn-body-wenkai); --font-sans: var(--font-cn-body-wenkai); }
+
+    .hero-copy {
+      margin-top: 34px;
+      max-width: 700px;
+      color: var(--ink-soft);
+      font-size: clamp(1.02rem, 1.55vw, 1.28rem);
+      font-weight: 700;
+      line-height: 1.72;
+    }
+
+    .highlight {
+      background: linear-gradient(to top, rgba(243, 214, 111, 0.72) 42%, transparent 42%);
+      padding-inline: 0.08em;
+    }
+
+    .mobile-break { display: none; }
+
+    .hero-board {
+      position: relative;
+      width: 100%;
+      max-width: 100%;
+      min-height: 560px;
+      padding: 34px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      overflow: hidden;
+    }
+
+    .map-node {
+      position: relative;
+      padding: 22px 24px;
+      margin-bottom: 22px;
+      background: rgba(244, 241, 236, 0.78);
+      border: 1px solid var(--line);
+    }
+
+    .map-node strong {
+      display: block;
+      font-size: 1.35rem;
+      line-height: 1.2;
+      margin-bottom: 7px;
+    }
+
+    .map-node > span {
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .map-node.is-hot {
+      border-color: rgba(182, 58, 63, 0.35);
+    }
+
+    .circled-word {
+      position: relative;
+      display: inline-block;
+      color: inherit;
+    }
+
+    .circled-word::after {
+      content: "";
+      position: absolute;
+      left: -10px;
+      top: -6px;
+      width: calc(100% + 20px);
+      height: calc(100% + 12px);
+      border: 2px solid var(--red);
+      border-radius: 50%;
+      transform: rotate(-8deg);
+      pointer-events: none;
+    }
+
+    .section {
+      padding-block: clamp(92px, 13vh, 160px);
+    }
+
+    .section.alt { background: var(--paper-deep); }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: clamp(28px, 5vw, 70px);
+      align-items: start;
+      margin-bottom: clamp(42px, 6vw, 82px);
+    }
+
+    .section-num {
+      color: rgba(182, 58, 63, 0.34);
+      font-family: var(--font-serif);
+      font-size: clamp(3.3rem, 7vw, 6.5rem);
+      font-weight: 900;
+      line-height: 0.8;
+    }
+
+    h2 {
+      max-width: 880px;
+      font-family: var(--font-title);
+      font-size: clamp(2.5rem, 5.4vw, 5rem);
+      font-weight: 900;
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+    }
+
+    .lead {
+      margin-top: 22px;
+      max-width: 720px;
+      color: var(--ink-soft);
+      font-size: clamp(1rem, 1.4vw, 1.2rem);
+      font-weight: 650;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(24px, 3vw, 36px);
+    }
+
+    .panel {
+      min-height: 360px;
+      padding: clamp(28px, 3vw, 42px);
+      border: 1px solid var(--line);
+      background: var(--surface);
+    }
+
+    .panel-label {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 2px 12px;
+      border-radius: 999px;
+      border: 2px solid var(--yellow);
+      font-family: var(--font-en-display);
+      font-style: normal;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 26px;
+    }
+
+    .panel h3 {
+      font-size: clamp(1.6rem, 2.7vw, 2.35rem);
+      line-height: 1.15;
+      margin-bottom: 18px;
+    }
+
+    .panel p {
+      color: var(--ink-soft);
+      font-size: 1rem;
+      font-weight: 650;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .flow-step {
+      position: relative;
+      min-height: 260px;
+      padding: 28px 24px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+    }
+
+    .flow-step::before {
+      content: attr(data-step);
+      display: block;
+      margin-bottom: 28px;
+      color: var(--red);
+      font-family: var(--font-code);
+      font-size: 0.84rem;
+      font-weight: 900;
+    }
+
+    .flow-step h3 {
+      font-size: 1.45rem;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .flow-step p {
+      color: var(--ink-soft);
+      font-size: 0.96rem;
+      font-weight: 650;
+    }
+
+    .compare-line {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 28px;
+      padding: 30px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .compare-line:last-child { border-bottom: 1px solid var(--line); }
+
+    .compare-key {
+      font-family: var(--font-title);
+      font-size: 3rem;
+      font-weight: 900;
+      line-height: 0.9;
+    }
+
+    .compare-line h3 {
+      font-size: clamp(1.35rem, 2.1vw, 1.9rem);
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .compare-line p {
+      max-width: 760px;
+      color: var(--ink-soft);
+      font-weight: 650;
+    }
+
+    .product-table {
+      border-top: 1px solid var(--line);
+    }
+
+    .product-row {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1fr);
+      gap: clamp(24px, 4vw, 60px);
+      padding: 26px 0;
+      border-bottom: 1px solid var(--line);
+      align-items: baseline;
+    }
+
+    .product-row strong {
+      font-size: clamp(1.35rem, 2.3vw, 2rem);
+      line-height: 1.12;
+    }
+
+    .product-row span {
+      color: var(--ink-soft);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .dark {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .dark .section-num { color: rgba(243, 214, 111, 0.46); }
+    .dark .lead,
+    .dark .compare-line p,
+    .dark .product-row span { color: rgba(236, 231, 226, 0.72); }
+    .dark .compare-line,
+    .dark .product-table,
+    .dark .product-row { border-color: rgba(236, 231, 226, 0.16); }
+
+    .api-box {
+      position: relative;
+      max-width: 860px;
+      padding: clamp(34px, 5vw, 62px);
+      border: 1px solid var(--line);
+      background: var(--surface);
+    }
+
+    .api-box::before {
+      content: "API KEY";
+      position: absolute;
+      top: -18px;
+      left: 32px;
+      padding: 2px 12px;
+      border: 2px solid var(--red);
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--red);
+      font-family: var(--font-code);
+      font-size: 0.76rem;
+      font-weight: 900;
+    }
+
+    .api-box p {
+      color: var(--ink-soft);
+      font-size: clamp(1.05rem, 1.55vw, 1.28rem);
+      font-weight: 700;
+    }
+
+    .end {
+      min-height: 86vh;
+      display: grid;
+      align-items: center;
+    }
+
+    .end h2 {
+      max-width: 1040px;
+      font-size: clamp(3.2rem, 7.4vw, 7rem);
+    }
+
+    .end-meta {
+      margin-top: clamp(42px, 7vw, 80px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
+      color: var(--ink-soft);
+      font-weight: 800;
+    }
+
+    .author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .avatar {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--yellow);
+    }
+
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: 0.1s; }
+    .reveal-d2 { transition-delay: 0.2s; }
+    .reveal-d3 { transition-delay: 0.3s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    @media (max-width: 920px) {
+      .topbar { align-items: flex-start; height: auto; padding-block: 14px; gap: 10px; flex-direction: column; }
+      .nav { flex-wrap: wrap; gap: 10px 16px; }
+      .hero,
+      .section-head,
+      .split,
+      .flow,
+      .product-row { grid-template-columns: 1fr; }
+      .hero { min-height: auto; }
+      .hero-board { min-height: auto; }
+      .flow-step { min-height: 190px; }
+      .compare-line { grid-template-columns: 76px 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .nav { display: none; }
+      h1 { font-size: clamp(3.25rem, 16vw, 4.6rem); }
+      .section { padding-block: 76px; }
+      .section-num { font-size: 3.2rem; }
+      .compare-line { grid-template-columns: 1fr; gap: 10px; }
+      .end-meta { align-items: flex-start; flex-direction: column; }
+      .hero-board { padding: 22px; }
+      .hero-copy { max-width: 100%; font-size: 0.98rem; overflow-wrap: anywhere; word-break: break-all; }
+      .mobile-break { display: block; }
+      .highlight { box-decoration-break: clone; -webkit-box-decoration-break: clone; word-break: break-all; }
+      .map-node { padding: 20px 18px; }
+    }
+  </style>
+</head>
+<body class="title-font-mincho body-font-sans">
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="回到顶部">
+      <span class="brand-mark"><span>×</span></span>
+      <span>ZEPHYR NOTE / AGENT INTRO</span>
+    </a>
+    <nav class="nav" aria-label="页面导航">
+      <a href="#model">模型与产品</a>
+      <a href="#agent">Agent</a>
+      <a href="#product">产品地图</a>
+      <a href="#api">API</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="wrap hero">
+      <div class="reveal">
+        <span class="eyebrow">AI Concept 01</span>
+        <h1><span class="en en-display hero-agent">Agent</span>究竟<br>是什么？</h1>
+        <p class="hero-copy">为什么现在几乎所有 AI 产品都在说自己是 Agent？<span class="mobile-break"></span>这次先把 <span class="highlight">模型、AI 产品、Agent、API</span><span class="mobile-break"></span>放在同一张图里讲清楚。</p>
+      </div>
+      <div class="hero-board reveal reveal-d1" aria-label="概念关系图">
+        <div class="map-node">
+          <strong>模型</strong>
+          <span>理解、生成、推理，像 AI 的大脑。</span>
+        </div>
+        <div class="map-node">
+          <strong>AI 产品</strong>
+          <span>在模型外面加界面、文件、搜索和工具。</span>
+        </div>
+        <div class="map-node is-hot">
+          <strong><span class="en-display circled-word">Agent</span></strong>
+          <span>围绕目标，自主决定下一步，并调用工具执行。</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="model">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="section-num">01</div>
+          <div>
+            <h2>第一步：先区分“模型”和“AI 产品”。</h2>
+            <p class="lead">很多讨论混乱，是因为把底层模型和外层产品混在了一起。</p>
+          </div>
+        </div>
+        <div class="split">
+          <article class="panel reveal reveal-d1">
+            <span class="panel-label">Model</span>
+            <h3>GPT、Claude、Kimi、DeepSeek，本质上是模型。</h3>
+            <p>模型负责理解、生成和推理。它决定 AI 的基础能力，你可以把它理解成 AI 的“大脑”。</p>
+          </article>
+          <article class="panel reveal reveal-d2">
+            <span class="panel-label">Product</span>
+            <h3>ChatGPT、Claude 网页版、Kimi 网页版，是 AI 产品。</h3>
+            <p>产品把模型装进可用的界面里，再加聊天、文件上传、联网搜索、工具调用等功能。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="agent">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="section-num">02</div>
+          <div>
+            <h2><span class="en-display">Agent</span> 不是某个软件，而是一种 AI 的形态。</h2>
+            <p class="lead">关键点不是它会不会聊天，而是它能不能围绕你的目标持续推进。</p>
+          </div>
+        </div>
+        <div class="flow">
+          <article class="flow-step reveal reveal-d1" data-step="01">
+            <h3>理解目标</h3>
+            <p>先判断你真正想完成什么，而不是只回答一句话。</p>
+          </article>
+          <article class="flow-step reveal reveal-d2" data-step="02">
+            <h3>拆解任务</h3>
+            <p>把目标拆成下一步、再下一步，形成行动顺序。</p>
+          </article>
+          <article class="flow-step reveal reveal-d3" data-step="03">
+            <h3>调用工具</h3>
+            <p>搜索、读文件、写代码、跑终端、查数据库，都可以成为工具。</p>
+          </article>
+          <article class="flow-step reveal reveal-d3" data-step="04">
+            <h3>检查循环</h3>
+            <p>看执行结果有没有问题，再继续修正和推进。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="section-num">03</div>
+          <div>
+            <h2>Chat 端和 Agent 最大区别：谁在执行。</h2>
+            <p class="lead">普通聊天 AI 主要给你答案，Agent 会尝试帮你把事情往前做。</p>
+          </div>
+        </div>
+        <div class="compare-line reveal reveal-d1">
+          <div class="compare-key">A</div>
+          <div>
+            <h3>Chat 端：你问一句，它答一句。</h3>
+            <p>它主要用文字、代码或建议来回应你，真正点击、复制、运行、检查的人通常还是你。</p>
+          </div>
+        </div>
+        <div class="compare-line reveal reveal-d2">
+          <div class="compare-key">B</div>
+          <div>
+            <h3><span class="en-display">Agent</span>：它先理解目标，再调用工具执行。</h3>
+            <p>它会拆任务、调工具、检查结果、继续调整。执行链条变长了，AI 不只是“说”，也开始“做”。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark" id="product">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="section-num">04</div>
+          <div>
+            <h2>具体产品怎么放？看它服务什么场景。</h2>
+            <p class="lead">普通人不必把每个名字分得特别细，先看它是聊天、办公，还是写代码。</p>
+          </div>
+        </div>
+        <div class="product-table reveal reveal-d1">
+          <div class="product-row">
+            <strong>Workbot / Workbody</strong>
+            <span>偏办公工作台，主要处理文档、表格、会议、流程等办公任务。</span>
+          </div>
+          <div class="product-row">
+            <strong>Tree</strong>
+            <span>更像搭在模型之上的 AI 产品入口，能力取决于它接入的模型和工具。</span>
+          </div>
+          <div class="product-row">
+            <strong>Trae / Cursor</strong>
+            <span>AI 代码编辑器。能读项目文件、改代码、创建文件，也能调用终端。</span>
+          </div>
+          <div class="product-row">
+            <strong><span class="mono">Claude Code / Kimi Code / Codex</span></strong>
+            <span>偏 Coding Agent。运行在终端或桌面里，围绕代码仓库执行任务、运行测试、修问题。</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="section-num">05</div>
+          <div>
+            <h2>为什么现在所有产品都说自己是 <span class="en-display">Agent</span>？</h2>
+            <p class="lead">因为 AI 产品正在从“聊天框”变成“任务执行器”。</p>
+          </div>
+        </div>
+        <div class="split">
+          <article class="panel reveal reveal-d1">
+            <span class="panel-label">能看</span>
+            <h3>它开始拥有上下文。</h3>
+            <p>不只看你这一句话，还能看文件、项目、历史记录、当前任务和你的约束。</p>
+          </article>
+          <article class="panel reveal reveal-d2">
+            <span class="panel-label">能做</span>
+            <h3>它开始连接工具。</h3>
+            <p>当 AI 能搜索、发邮件、读数据库、修改代码，它就更接近 Agent 的工作方式。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="api">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="section-num">06</div>
+          <div>
+            <h2>顺便解释一下 <span class="mono">API</span>：程序之间互相调用的接口。</h2>
+            <p class="lead">如果不想订阅某个 Agent 产品的会员，就可能需要接入自己的 API Key。</p>
+          </div>
+        </div>
+        <div class="api-box reveal reveal-d1">
+          <p><span class="mono">API Key</span> 可以粗略理解成一张“扣费凭证”。<span class="en-display">Agent</span> 产品用它去调用模型、搜索、天气、邮件、数据库等服务，用多少就从你的额度里扣多少。它不该公开，也不要发给别人。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section end">
+      <div class="wrap reveal">
+        <span class="eyebrow">Conclusion</span>
+        <h2>模型是大脑，产品是外壳，<span class="en-display">Agent</span> 是会行动的形态。</h2>
+        <p class="hero-copy">至于 <span class="en-display">Agent</span> 怎么连接外部服务，以及 <span class="mono">MCP</span> 到底解决什么问题，下一期再单独讲。</p>
+        <div class="end-meta">
+          <div class="author">
+            <img class="avatar" src="assets/avatar.jpg" alt="avatar">
+            <span>关注我，继续拆 AI 工具</span>
+          </div>
+          <span>ZEPHYR NOTE / AGENT INTRO</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>

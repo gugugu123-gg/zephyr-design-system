@@ -6,35 +6,69 @@
   <title><!-- App标题 --></title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Fira+Code:wght@400;500;700&family=Libre+Baskerville:wght@400;700&family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@700;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,700&display=swap" rel="stylesheet">
   <style>
     /* === CSS变量（简化版） === */
     :root { --_esther-ds: "esthersjw-v1";
-      --blue: #2B7FD8;
-      --yellow: #F4D758;
-      --red: #E84A5F;
-      --cream: #fefcf6;
-      --ink: #1A1A2E;
-      --ink-light: #4A4A5A;
-      --ink-faint: #8A8A9A;
-      --card-bg: #fff;
-      --border: rgba(26,26,26,.08);
+      --paper: #ECE7E2;
+      --paper-light: #F4F1EC;
+      --paper-deep: #E4DFDA;
+      --ink: #171715;
+      --ink-soft: #5B5752;
+      --ink-faint: #8A857F;
+      --yellow: #F3D66F;
+      --red: #B63A3F;
+      --line: rgba(23,23,21,0.10);
+      --surface: rgba(255,255,255,0.48);
+
+      --cream: var(--paper);
+      --cream-dark: var(--paper-deep);
+      --ink-light: var(--ink-soft);
+      --card-bg: var(--surface);
+      --border: var(--line);
+      --font-cn-title-sans: "Source Han Sans SC", "思源黑体", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      --font-cn-title-wenkai: "LXGW WenKai", "霞鹜文楷", "Noto Serif SC", serif;
+      --font-cn-title-mincho: "Huiwen Mincho", "汇文明朝体", "Noto Serif SC", serif;
+      --font-cn-title-serif: "Source Han Serif SC", "思源宋体", "Noto Serif SC", "Songti SC", serif;
+      --font-cn-body-sans: "Source Han Sans SC", "思源黑体", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      --font-cn-body-wenkai: "LXGW WenKai", "霞鹜文楷", "Source Han Sans SC", "Noto Sans SC", sans-serif;
+      --font-title: var(--font-cn-title-wenkai);
+      --font-body: var(--font-cn-body-sans);
+      --font-en-title-sans: "Arial Narrow", "Helvetica Neue", "Aptos Display", Arial, sans-serif;
+      --font-en-title-serif: "Source Serif 4", "Libre Baskerville", Georgia, serif;
+      --font-en-display: var(--font-en-title-sans);
+      --font-hand: "Caveat", "Comic Sans MS", cursive;
+      --font-code: "Fira Code", "Cascadia Code", "Consolas", monospace;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Noto Sans SC', -apple-system, 'PingFang SC', 'Helvetica Neue', sans-serif;
+      font-family: var(--font-body);
       font-size: 15px;
       line-height: 1.6;
       color: var(--ink);
-      background: var(--cream);
-    }
+      background-color: var(--cream);
+      background-image:
+        linear-gradient(115deg, rgba(255,255,255,0.16), transparent 42%, rgba(23,23,21,0.018)),
+        radial-gradient(circle at 18% 22%, rgba(255,255,255,0.20), transparent 28%),
+        radial-gradient(circle at 78% 64%, rgba(23,23,21,0.020), transparent 32%);
+      background-size: auto;}
 
     ::selection {
       background: var(--yellow);
       color: var(--ink);
     }
+
+    .en-display { font-family: var(--font-en-display); font-style: normal; font-weight: 700; letter-spacing: -0.04em; }
+    .hand-note { font-family: var(--font-hand); }
+    code, pre, kbd, .mono { font-family: var(--font-code); }
+    .title-font-wenkai { --font-title: var(--font-cn-title-wenkai); }
+    .title-font-heiti { --font-title: var(--font-cn-title-sans); }
+    .title-font-mincho { --font-title: var(--font-cn-title-mincho); }
+    .title-font-serif { --font-title: var(--font-cn-title-serif); }
+    .body-font-sans { --font-body: var(--font-cn-body-sans); }
+    .body-font-wenkai { --font-body: var(--font-cn-body-wenkai); }
 
     /* === Fixed Header === */
     .app-header {
@@ -86,8 +120,8 @@
     }
 
     .tab.active {
-      border-bottom-color: var(--blue);
-      color: var(--blue);
+      border-bottom-color: var(--red);
+      color: var(--red);
       font-weight: 600;
     }
 
@@ -111,16 +145,17 @@
 
     .app-card {
       background: var(--card-bg);
+      border: 1px solid var(--border);
       border-radius: 12px;
       padding: 1.25rem;
-      box-shadow: 0 2px 12px rgba(0,0,0,.04);
+      box-shadow: none;
       transition: transform .2s, box-shadow .2s;
       cursor: pointer;
     }
 
     .app-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0,0,0,.08);
+      box-shadow: none;
     }
 
     .app-card h3 {
@@ -139,8 +174,8 @@
       padding: 2px 8px;
       border-radius: 8px;
       font-size: 0.7rem;
-      background: rgba(43,127,216,0.1);
-      color: var(--blue);
+      background: rgba(182,58,63,0.1);
+      color: var(--red);
       margin-bottom: 0.5rem;
     }
 
@@ -201,8 +236,8 @@
 
     .app-input:focus {
       outline: none;
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(43,127,216,0.1);
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(182,58,63,0.1);
     }
 
     /* === 响应式 === */

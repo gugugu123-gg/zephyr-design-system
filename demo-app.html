@@ -10,14 +10,14 @@
   <style>
     /* === CSS变量 === */
     :root { --_esther-ds: "esthersjw-v1";
-      --blue: #2B7FD8;
-      --yellow: #F4D758;
-      --red: #E84A5F;
-      --cream: #fefcf6;
-      --ink: #1A1A2E;
-      --ink-light: #4A4A5A;
-      --ink-faint: #8A8A9A;
-      --card-bg: #fff;
+      --red: #B63A3F;
+      --yellow: #F3D66F;
+
+      --cream: #ECE7E2;
+      --ink: #171715;
+      --ink-light: #5B5752;
+      --ink-faint: #5B5752;
+      --card-bg: var(--cream);
       --border: rgba(26,26,26,.08);
     }
 
@@ -36,7 +36,7 @@
       color: var(--ink);
     }
 
-    /* === 三色装饰条 === */
+    /* === 双色装饰条 === */
     body::before {
       content: '';
       position: fixed;
@@ -44,7 +44,7 @@
       left: 0;
       right: 0;
       height: 3px;
-      background: var(--blue);
+      background: var(--red);
       z-index: 9999;
     }
     body::after {
@@ -109,16 +109,16 @@
     }
 
     .btn-icon:hover {
-      border-color: var(--blue);
-      color: var(--blue);
+      border-color: var(--red);
+      color: var(--red);
     }
 
     .avatar {
       width: 32px;
       height: 32px;
       border-radius: 50%;
-      background: var(--blue);
-      color: #fff;
+      background: var(--red);
+      color: var(--cream);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -154,8 +154,8 @@
     }
 
     .tab.active {
-      border-bottom-color: var(--blue);
-      color: var(--blue);
+      border-bottom-color: var(--red);
+      color: var(--red);
       font-weight: 600;
     }
 
@@ -193,7 +193,7 @@
       line-height: 1.2;
     }
 
-    .stat-card .stat-number.blue { color: var(--blue); }
+    .stat-card .stat-number.accent { color: var(--red); }
     .stat-card .stat-number.yellow { color: #c5a800; }
     .stat-card .stat-number.red { color: var(--red); }
 
@@ -240,24 +240,24 @@
       padding: 2px 8px;
       border-radius: 8px;
       font-size: 0.7rem;
-      background: rgba(43,127,216,0.1);
-      color: var(--blue);
+      background: rgba(182,58,63,0.1);
+      color: var(--red);
       margin-bottom: 0.5rem;
     }
 
     .card-badge.yellow {
-      background: rgba(244,215,88,0.2);
+      background: rgba(243,214,111,0.2);
       color: #9a8400;
     }
 
     .card-badge.red {
-      background: rgba(232,74,95,0.1);
+      background: rgba(182,58,63,0.1);
       color: var(--red);
     }
 
-    .card-badge.green {
-      background: rgba(40,167,69,0.1);
-      color: #28a745;
+    .card-badge.note {
+      background: rgba(182,58,63,0.1);
+      color: var(--red);
     }
 
     /* === 卡片内列表 === */
@@ -289,14 +289,14 @@
     }
 
     .card-list .check.done {
-      background: var(--blue);
-      border-color: var(--blue);
+      background: var(--red);
+      border-color: var(--red);
       position: relative;
     }
 
     .card-list .check.done::after {
       content: '✓';
-      color: #fff;
+      color: var(--cream);
       font-size: 10px;
       position: absolute;
       top: 50%;
@@ -322,7 +322,7 @@
     .progress-bar .fill {
       height: 100%;
       border-radius: 3px;
-      background: var(--blue);
+      background: var(--red);
       transition: width .3s;
     }
 
@@ -370,7 +370,7 @@
       justify-content: center;
       font-size: 1.2rem;
       flex-shrink: 0;
-      background: rgba(43,127,216,0.08);
+      background: rgba(182,58,63,0.08);
     }
 
     .list-item-body {
@@ -429,7 +429,7 @@
       width: 12px;
       height: 12px;
       border-radius: 50%;
-      background: var(--blue);
+      background: var(--red);
       flex-shrink: 0;
       margin-top: 4px;
     }
@@ -530,14 +530,14 @@
 
     .app-input:focus {
       outline: none;
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(43,127,216,0.1);
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(182,58,63,0.1);
     }
 
     /* === 按钮 === */
     .btn-primary {
-      background: var(--blue);
-      color: #fff;
+      background: var(--red);
+      color: var(--cream);
       border: none;
       border-radius: 8px;
       padding: 10px 20px;
@@ -573,7 +573,7 @@
 </head>
 <body>
 
-  <!-- 三色装饰条（红） -->
+  <!-- 双色装饰条（红） -->
   <div class="tricolor-red"></div>
 
   <!-- ====== Fixed Header ====== -->
@@ -603,7 +603,7 @@
       <!-- 统计数据 -->
       <div class="stats-row">
         <div class="stat-card">
-          <div class="stat-number blue">7</div>
+          <div class="stat-number accent">7</div>
           <div class="stat-label">今日待办</div>
         </div>
         <div class="stat-card">
@@ -652,13 +652,13 @@
 
         <!-- 最近笔记 -->
         <div class="app-card">
-          <span class="card-badge green">笔记</span>
+          <span class="card-badge note">笔记</span>
           <h3>最近笔记</h3>
           <ul class="card-list">
-            <li><span style="color: var(--blue);">📝</span> 用户访谈总结 — 今天</li>
-            <li><span style="color: var(--blue);">📝</span> 竞品分析报告 — 昨天</li>
-            <li><span style="color: var(--blue);">📝</span> Q3 规划草案 — 周一</li>
-            <li><span style="color: var(--blue);">📝</span> 设计系统规范 v2 — 周一</li>
+            <li><span style="color: var(--red);">📝</span> 用户访谈总结 — 今天</li>
+            <li><span style="color: var(--red);">📝</span> 竞品分析报告 — 昨天</li>
+            <li><span style="color: var(--red);">📝</span> Q3 规划草案 — 周一</li>
+            <li><span style="color: var(--red);">📝</span> 设计系统规范 v2 — 周一</li>
           </ul>
         </div>
 
@@ -794,7 +794,7 @@
           <p style="font-size: 0.75rem; color: var(--ink-faint); margin-top: 0.5rem;">昨天 16:20 · 3,800字</p>
         </div>
         <div class="app-card">
-          <span class="card-badge green">规划</span>
+          <span class="card-badge note">规划</span>
           <h3>Q3 规划草案</h3>
           <p>核心目标：用户留存率提升 15%、完成 v2.0 发布、建立设计系统完整文档库…</p>
           <p style="font-size: 0.75rem; color: var(--ink-faint); margin-top: 0.5rem;">周一 09:00 · 2,100字</p>

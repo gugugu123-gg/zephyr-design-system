@@ -10,17 +10,19 @@
   <style>
     /* === CSS变量 === */
     :root { --_esther-ds: "esthersjw-v1";
-      --blue: #2B7FD8;
-      --blue-deep: #1E5BA8;
-      --yellow: #F4D758;
-      --yellow-soft: #FFF3CD;
-      --red: #E84A5F;
-      --cream: #fefcf6;
-      --cream-dark: #faf6eb;
-      --ink: #1A1A2E;
-      --ink-light: #4A4A5A;
-      --ink-faint: #8A8A9A;
-      --dark-panel: #151821;
+      --red: #B63A3F;
+
+      --yellow: #F3D66F;
+      --yellow-soft: #F4F1EC;
+
+      --cream: #ECE7E2;
+      --cream-dark: #E4DFDA;
+      --surface: rgba(255,255,255,0.48);
+      --line: rgba(23,23,21,0.10);
+      --ink: #171715;
+      --ink-light: #5B5752;
+      --ink-faint: #8A857F;
+      --dark-panel: var(--ink);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -30,8 +32,12 @@
       font-size: 16px;
       line-height: 1.7;
       color: var(--ink);
-      background: var(--cream);
-    }
+      background-color: var(--cream);
+      background-image:
+        linear-gradient(115deg, rgba(255,255,255,0.16), transparent 42%, rgba(23,23,21,0.018)),
+        radial-gradient(circle at 18% 22%, rgba(255,255,255,0.20), transparent 28%),
+        radial-gradient(circle at 78% 64%, rgba(23,23,21,0.020), transparent 32%);
+      background-size: auto;}
 
     ::selection {
       background: var(--yellow);
@@ -50,7 +56,7 @@
       top: 0; left: 0; right: 0;
       z-index: 100;
       padding: 1rem 2rem;
-      background: rgba(254,252,246,.85);
+      background: rgba(236,231,226,.85);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(26,26,26,.06);
       display: flex;
@@ -107,7 +113,7 @@
       top: -20%; right: -10%;
       width: 500px; height: 500px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(244,215,88,0.12) 0%, transparent 70%);
+      background: transparent;
       pointer-events: none;
     }
     .hero::after {
@@ -116,7 +122,7 @@
       bottom: -10%; left: -5%;
       width: 400px; height: 400px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(43,127,216,0.08) 0%, transparent 70%);
+      background: transparent;
       pointer-events: none;
     }
 
@@ -139,7 +145,7 @@
       position: relative;
     }
     .hero h1 .hl {
-      background: linear-gradient(transparent 60%, rgba(244,215,88,0.4) 60%);
+      background: linear-gradient(transparent 60%, rgba(243,214,111,0.28) 60%);
       padding: 0 6px;
     }
 
@@ -180,7 +186,7 @@
       font-family: 'Fraunces', serif;
       font-style: italic;
       font-size: clamp(1.4rem, 3vw, 2rem);
-      color: var(--blue);
+      color: var(--red);
       opacity: 0.3;
       display: block;
       margin-bottom: 0.25rem;
@@ -198,12 +204,13 @@
       gap: clamp(20px, 2.5vw, 32px);
     }
     .speaker-card {
-      background: #fff;
+      background: var(--surface);
+      border: 1px solid var(--line);
       border-radius: 20px;
       padding: clamp(28px, 3vw, 40px);
       position: relative;
       overflow: hidden;
-      box-shadow: 0 4px 24px rgba(0,0,0,.05);
+      box-shadow: none;
       transition: transform 0.3s ease;
     }
     .speaker-card:hover {
@@ -215,7 +222,7 @@
       top: 0; left: 0; right: 0;
       height: 4px;
     }
-    .speaker-card:nth-child(1)::before { background: var(--blue); }
+    .speaker-card:nth-child(1)::before { background: var(--red); }
     .speaker-card:nth-child(2)::before { background: var(--yellow); }
     .speaker-card:nth-child(3)::before { background: var(--red); }
 
@@ -228,9 +235,9 @@
       justify-content: center;
       font-size: 1.8rem;
     }
-    .speaker-card:nth-child(1) .speaker-avatar { background: rgba(43,127,216,0.08); }
-    .speaker-card:nth-child(2) .speaker-avatar { background: rgba(244,215,88,0.15); }
-    .speaker-card:nth-child(3) .speaker-avatar { background: rgba(232,74,95,0.08); }
+    .speaker-card:nth-child(1) .speaker-avatar { background: rgba(182,58,63,0.08); }
+    .speaker-card:nth-child(2) .speaker-avatar { background: rgba(243,214,111,0.15); }
+    .speaker-card:nth-child(3) .speaker-avatar { background: rgba(182,58,63,0.08); }
 
     .speaker-name {
       font-family: 'Noto Serif SC', serif;
@@ -240,7 +247,7 @@
     }
     .speaker-role {
       font-size: 0.78rem;
-      color: var(--blue);
+      color: var(--red);
       font-weight: 500;
       margin-bottom: 12px;
     }
@@ -259,7 +266,7 @@
     .highlight-card {
       display: flex;
       align-items: stretch;
-      background: #fff;
+      background: var(--cream);
       border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 2px 16px rgba(0,0,0,0.04);
@@ -271,10 +278,10 @@
       justify-content: center;
       font-size: 1.8rem;
     }
-    .highlight-card:nth-child(1) .highlight-icon { background: rgba(43,127,216,0.06); }
-    .highlight-card:nth-child(2) .highlight-icon { background: rgba(244,215,88,0.12); }
-    .highlight-card:nth-child(3) .highlight-icon { background: rgba(232,74,95,0.06); }
-    .highlight-card:nth-child(4) .highlight-icon { background: rgba(43,127,216,0.06); }
+    .highlight-card:nth-child(1) .highlight-icon { background: rgba(182,58,63,0.06); }
+    .highlight-card:nth-child(2) .highlight-icon { background: rgba(243,214,111,0.12); }
+    .highlight-card:nth-child(3) .highlight-icon { background: rgba(182,58,63,0.06); }
+    .highlight-card:nth-child(4) .highlight-icon { background: rgba(182,58,63,0.06); }
     .highlight-content {
       flex: 1;
       padding: 20px 24px;
@@ -323,8 +330,8 @@
 
     /* === 品牌色面板（时间线） === */
     .brand-section {
-      background: var(--blue);
-      color: #fff;
+      background: var(--red);
+      color: var(--cream);
       padding: clamp(80px, 12vh, 160px) 0;
       position: relative;
       overflow: hidden;
@@ -342,7 +349,7 @@
       color: rgba(255,255,255,0.4);
     }
     .brand-section .section-header .section-title {
-      color: #fff;
+      color: var(--cream);
     }
 
     .timeline-list {
@@ -449,8 +456,8 @@
       align-items: center;
       gap: 8px;
       padding: 16px 36px;
-      background: var(--blue);
-      color: #fff;
+      background: var(--red);
+      color: var(--cream);
       border-radius: 12px;
       text-decoration: none;
       font-weight: 600;
@@ -459,7 +466,7 @@
     }
     .cta-button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(43,127,216,0.3);
+      box-shadow: 0 8px 24px rgba(182,58,63,0.3);
     }
     .cta-note {
       margin-top: 1rem;

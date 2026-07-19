@@ -17,20 +17,27 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root { --_esther-ds: "esthersjw-v1";
-  --yellow: #F4D758;
-  --yellow-soft: #FFF3CD;
-  --blue: #2B7FD8;
-  --blue-deep: #1E5BA8;
-  --red: #E84A5F;
-  --cream: #fefcf6;
-  --cream-dark: #faf6eb;
-  --ink: #1A1A2E;
-  --ink-light: #4A4A5A;
-  --ink-faint: #8A8A9A;
+  --yellow: #F3D66F;
+  --yellow-soft: #F4F1EC;
+  --red: #B63A3F;
+
+
+  --cream: #ECE7E2;
+  --cream-dark: #E4DFDA;
+  --surface: rgba(255,255,255,0.48);
+  --line: rgba(23,23,21,0.10);
+  --ink: #171715;
+  --ink-light: #5B5752;
+  --ink-faint: #8A857F;
 }
 
 body {
-  background: #e8e4de;
+  background-color: #d9d4cc;
+  background-image:
+        linear-gradient(115deg, rgba(255,255,255,0.16), transparent 42%, rgba(23,23,21,0.018)),
+        radial-gradient(circle at 18% 22%, rgba(255,255,255,0.20), transparent 28%),
+        radial-gradient(circle at 78% 64%, rgba(23,23,21,0.020), transparent 32%);
+      background-size: auto;background-position: 0 0, 2px 3px;
   font-family: 'Noto Sans SC', -apple-system, 'PingFang SC', sans-serif;
   color: var(--ink);
   padding: 40px 20px;
@@ -52,8 +59,8 @@ body {
 }
 
 .export-bar button {
-  background: var(--blue);
-  color: #fff;
+  background: var(--red);
+  color: var(--cream);
   border: none;
   padding: 10px 28px;
   border-radius: 8px;
@@ -63,7 +70,7 @@ body {
   font-family: 'Noto Sans SC', sans-serif;
 }
 
-.export-bar button:hover { background: #1a6abf; }
+.export-bar button:hover { background: #B63A3F; }
 
 .export-bar .hint {
   color: #aaa;
@@ -96,14 +103,14 @@ body {
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 8px;
-  background: linear-gradient(90deg, var(--blue) 60%, var(--yellow) 80%, var(--red) 100%);
+  background: var(--red);
 }
 
 .deco-bottom {
   position: absolute;
   bottom: 0; left: 0; right: 0;
   height: 8px;
-  background: linear-gradient(90deg, var(--blue) 60%, var(--yellow) 80%, var(--red) 100%);
+  background: var(--red);
 }
 
 .page-num {
@@ -122,11 +129,12 @@ body {
 /* ========== P1 封面 ========== */
 .p-cover {
   background: var(--cream);
-  border: 28px solid var(--yellow);
   background-image:
-    linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
+    linear-gradient(115deg, rgba(255,255,255,0.14), transparent 44%, rgba(23,23,21,0.014)),
+    radial-gradient(circle at 24% 18%, rgba(255,255,255,0.18), transparent 30%),
+    radial-gradient(circle at 76% 72%, rgba(23,23,21,0.016), transparent 34%);
+  background-size: auto;
+  border: 1px solid var(--line);
   display: flex;
   flex-direction: column;
   padding: 80px 90px;
@@ -136,7 +144,8 @@ body {
   font-size: 32px;
   font-weight: 700;
   color: var(--ink);
-  background: var(--yellow);
+  background: var(--surface);
+  border: 1px solid var(--line);
   display: inline-block;
   padding: 14px 32px;
   border-radius: 8px;
@@ -145,7 +154,7 @@ body {
 }
 
 .p-cover h1 {
-  font-family: 'Huiwen Mincho', 'Noto Serif SC', serif;
+  font-family: 'LXGW WenKai', '霞鹜文楷', 'Huiwen Mincho', 'Noto Serif SC', serif;
   font-weight: normal;
   font-size: 84px;
   line-height: 1.3;
@@ -154,11 +163,12 @@ body {
 }
 
 .p-cover h1 em {
-  background: var(--blue);
-  color: #fff;
+  background: transparent;
+  color: var(--ink);
   font-style: normal;
   padding: 4px 16px;
-  border-radius: 6px;
+  border-radius: 0;
+  box-shadow: inset 0 -0.32em rgba(182,58,63,0.22);
 }
 
 .p-cover .subtitle {
@@ -245,7 +255,7 @@ body {
 }
 
 .p-problem .pain-text strong {
-  color: #fff;
+  color: var(--cream);
   font-weight: 700;
 }
 
@@ -255,7 +265,7 @@ body {
   left: 90px;
   right: 90px;
   height: 4px;
-  background: linear-gradient(90deg, var(--blue), var(--yellow));
+  background: var(--red);
   border-radius: 2px;
   opacity: 0.5;
 }
@@ -286,7 +296,7 @@ body {
 }
 
 .p-turning h2 em {
-  color: var(--blue);
+  color: var(--red);
   font-style: normal;
   text-decoration: underline;
   text-decoration-color: var(--yellow);
@@ -309,7 +319,7 @@ body {
   padding: 90px 90px;
 }
 
-.p-v1 .page-num { color: var(--blue); }
+.p-v1 .page-num { color: var(--red); }
 
 .p-v1 h2 {
   font-family: 'Noto Serif SC', serif;
@@ -322,7 +332,7 @@ body {
 .p-v1 .label {
   font-family: 'Fira Code', monospace;
   font-size: 24px;
-  color: var(--blue);
+  color: var(--red);
   text-transform: uppercase;
   letter-spacing: 3px;
   margin-bottom: 48px;
@@ -349,7 +359,8 @@ body {
 }
 
 .p-v1 .file-row:nth-child(even) {
-  background: #fff;
+  background: var(--surface);
+  border: 1px solid var(--line);
 }
 
 .p-v1 .file-name {
@@ -371,12 +382,12 @@ body {
   color: var(--ink-faint);
   padding: 24px 32px;
   border-radius: 12px;
-  background: rgba(43,127,216,0.06);
+  background: rgba(182,58,63,0.06);
 }
 
 /* ========== P5 方法论(深色) ========== */
 .p-method {
-  background: #151821;
+  background: var(--ink);
   display: flex;
   flex-direction: column;
   padding: 90px 90px;
@@ -424,7 +435,7 @@ body {
   font-family: 'Noto Sans SC', sans-serif;
   font-size: 32px;
   font-weight: 700;
-  color: #fff;
+  color: var(--cream);
   margin-bottom: 12px;
 }
 
@@ -448,7 +459,7 @@ body {
 .p-quote-big .oversized-mark {
   font-family: 'Fraunces', serif;
   font-size: 280px;
-  color: var(--blue);
+  color: var(--red);
   opacity: 0.1;
   line-height: 0.5;
   margin-bottom: 20px;
@@ -464,7 +475,7 @@ body {
 }
 
 .p-quote-big .quote-text em {
-  color: var(--blue);
+  color: var(--red);
   font-style: normal;
 }
 
@@ -484,7 +495,7 @@ body {
   padding: 90px 80px;
 }
 
-.p-upgrade .page-num { color: var(--blue); }
+.p-upgrade .page-num { color: var(--red); }
 
 .p-upgrade h2 {
   font-family: 'Noto Serif SC', serif;
@@ -507,7 +518,8 @@ body {
   align-items: center;
   gap: 28px;
   padding: 28px 36px;
-  background: #fff;
+  background: var(--surface);
+  border: 1px solid var(--line);
   border-radius: 16px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.04);
 }
@@ -516,7 +528,7 @@ body {
   font-family: 'Fraunces', serif;
   font-size: 56px;
   font-weight: 900;
-  color: var(--blue);
+  color: var(--red);
   opacity: 0.25;
   flex-shrink: 0;
   width: 72px;
@@ -531,7 +543,7 @@ body {
 }
 
 .p-upgrade .step-text strong {
-  color: var(--blue);
+  color: var(--red);
 }
 
 .p-upgrade .flow-arrow {
@@ -541,7 +553,7 @@ body {
 
 .p-upgrade .flow-arrow span {
   font-size: 40px;
-  color: var(--blue);
+  color: var(--red);
   opacity: 0.5;
 }
 
@@ -553,7 +565,7 @@ body {
   padding: 90px 80px;
 }
 
-.p-components .page-num { color: var(--blue); }
+.p-components .page-num { color: var(--red); }
 
 .p-components h2 {
   font-family: 'Noto Serif SC', serif;
@@ -587,7 +599,8 @@ body {
 }
 
 .p-components .data-row:nth-child(odd) {
-  background: #fff;
+  background: var(--surface);
+  border: 1px solid var(--line);
 }
 
 .p-components .data-row:nth-child(even) {
@@ -604,7 +617,7 @@ body {
   font-family: 'Fraunces', serif;
   font-size: 52px;
   font-weight: 900;
-  color: var(--blue);
+  color: var(--red);
 }
 
 .p-components .data-detail {
@@ -616,12 +629,13 @@ body {
 .p-components .bottom-insight {
   margin-top: 48px;
   padding: 28px 36px;
-  background: rgba(43,127,216,0.06);
+  background: rgba(182,58,63,0.06);
   border-radius: 14px;
   font-size: 32px;
   color: var(--ink-light);
   line-height: 1.5;
-  border-left: 5px solid var(--blue);
+  border-left: 0;
+  border-top: 4px solid var(--red);
 }
 
 /* ========== P9 文件树(代码面板) ========== */
@@ -646,13 +660,13 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: #0d1117;
+  background: #171715;
   border-radius: 16px;
   overflow: hidden;
 }
 
 .p-filetree .code-titlebar {
-  background: #21262d;
+  background: #36584C;
   padding: 16px 24px;
   display: flex;
   align-items: center;
@@ -701,7 +715,7 @@ body {
   padding: 90px 80px;
 }
 
-.p-insights .page-num { color: var(--blue); }
+.p-insights .page-num { color: var(--red); }
 
 .p-insights h2 {
   font-family: 'Noto Serif SC', serif;
@@ -737,7 +751,7 @@ body {
 }
 
 .p-insights .insight-item .text em {
-  color: var(--blue);
+  color: var(--red);
   font-style: normal;
 }
 
@@ -771,7 +785,8 @@ body {
   display: flex;
   gap: 24px;
   padding: 32px;
-  background: #fff;
+  background: var(--surface);
+  border: 1px solid var(--line);
   border-radius: 16px;
   box-shadow: 0 2px 16px rgba(0,0,0,0.04);
   align-items: flex-start;
@@ -786,11 +801,11 @@ body {
   width: 64px;
 }
 
-.p-action .action-item:nth-child(1) .action-num { color: rgba(43,127,216,0.2); }
-.p-action .action-item:nth-child(2) .action-num { color: rgba(244,215,88,0.4); }
-.p-action .action-item:nth-child(3) .action-num { color: rgba(232,74,95,0.2); }
-.p-action .action-item:nth-child(4) .action-num { color: rgba(43,127,216,0.2); }
-.p-action .action-item:nth-child(5) .action-num { color: rgba(244,215,88,0.4); }
+.p-action .action-item:nth-child(1) .action-num { color: rgba(182,58,63,0.2); }
+.p-action .action-item:nth-child(2) .action-num { color: rgba(243,214,111,0.34); }
+.p-action .action-item:nth-child(3) .action-num { color: rgba(182,58,63,0.2); }
+.p-action .action-item:nth-child(4) .action-num { color: rgba(182,58,63,0.2); }
+.p-action .action-item:nth-child(5) .action-num { color: rgba(243,214,111,0.34); }
 
 .p-action .action-content h3 {
   font-size: 34px;
@@ -820,7 +835,7 @@ body {
   font-family: 'Fraunces', serif;
   font-style: italic;
   font-size: 200px;
-  color: var(--blue);
+  color: var(--red);
   opacity: 0.15;
   line-height: 0.6;
   margin-bottom: -20px;
@@ -837,7 +852,7 @@ body {
 }
 
 .p-end .quote em {
-  color: var(--blue);
+  color: var(--red);
   font-style: normal;
   text-decoration: underline;
   text-decoration-color: var(--yellow);
@@ -863,7 +878,7 @@ body {
 
 .p-end .cta {
   font-size: 32px;
-  color: var(--blue);
+  color: var(--red);
   font-weight: 600;
   margin-bottom: 48px;
 }
@@ -935,7 +950,7 @@ body {
 
 <!-- ===== P4 第一版(色块交替行) ===== -->
 <div class="card p-v1" data-card="4">
-  <span class="page-num" style="color: var(--blue);">04</span>
+  <span class="page-num" style="color: var(--red);">04</span>
   <h2>第一版内容(很薄但有用)</h2>
   <p class="label">Phase 1 · Initial Version</p>
   <div class="file-list">
@@ -945,7 +960,7 @@ body {
     </div>
     <div class="file-row">
       <span class="file-name">brand-dna.md</span>
-      <span class="file-desc">三色、字体偏好、气质关键词</span>
+      <span class="file-desc">双色、字体偏好、气质关键词</span>
     </div>
     <div class="file-row">
       <span class="file-name">scene-tutorial.md</span>

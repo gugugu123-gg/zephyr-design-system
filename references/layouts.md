@@ -137,8 +137,9 @@
   left: -60px;
   width: 44px; height: 44px;
   border-radius: 50%;
-  background: var(--blue);
-  color: #fff;
+  background: var(--surface, rgba(255,255,255,0.48));
+  border: 1px solid var(--line, rgba(23,23,21,0.10));
+  color: var(--ink);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -178,7 +179,7 @@
   left: 50%;
   top: 0; bottom: 0;
   width: 2px;
-  background: rgba(43, 127, 216, 0.15);
+  background: rgba(23, 23, 21, 0.10);
 }
 .timeline-item {
   display: grid;
@@ -196,9 +197,9 @@
 
 ---
 
-## 6. 全宽深色面板
+## 6. 编辑红 特殊面板
 
-**适用**: 重要引用、核心观点、代码展示（打破奶白底节奏）
+**适用**: 重要引用、核心观点、少量情绪转折（打破纸张底节奏）
 
 ```html
 <section class="dark-section">
@@ -210,7 +211,7 @@
 
 ```css
 .dark-section {
-  background: #151821;
+  background: #171715;
   color: #e2e8f0;
   padding: clamp(60px, 8vh, 120px) 0;
 }
@@ -262,7 +263,7 @@
   top: 28px;
   left: 28px; right: 28px;
   height: 3px;
-  background: linear-gradient(90deg, var(--yellow), var(--blue));
+  background: var(--yellow);
 }
 .step-card {
   text-align: center;
@@ -271,8 +272,9 @@
 .step-dot {
   width: 56px; height: 56px;
   border-radius: 50%;
-  background: var(--blue);
-  color: #fff;
+  background: var(--surface, rgba(255,255,255,0.48));
+  border: 1px solid var(--line, rgba(23,23,21,0.10));
+  color: var(--ink);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -309,7 +311,7 @@
   padding: 6rem 2rem 4rem;
 }
 .hero-card {
-  background: #fff;
+  background: var(--cream);
   border-radius: 24px;
   padding: clamp(2.5rem, 5vw, 4.5rem);
   box-shadow: 0 4px 32px rgba(26,26,26,.08);
@@ -384,7 +386,7 @@
 
 ---
 
-## 11. 全宽品牌色面板
+## 11. 编辑红 重点面板
 
 **适用**: 情绪高潮、CTA邀请、核心观点（打破奶白底节奏）
 
@@ -399,8 +401,8 @@
 
 ```css
 .section-accent {
-  background: var(--blue);
-  color: #fff;
+  background: var(--ink, #171715);
+  color: var(--cream);
   padding: clamp(80px, 12vh, 160px) 0;
   position: relative;
   overflow: hidden;
@@ -412,7 +414,7 @@
 }
 ```
 
-⚠️ 注意：一页最多1~2个。可换用黄色（文字改为墨色）。不要在品牌色面板上放蓝色文字。
+⚠️ 注意：一页最多1个。不要换成整屏编辑红或黄色；黄色只做短线、小圆点、关键词高亮。
 
 ---
 
@@ -448,7 +450,7 @@
 .timeline-card {
   flex: 0 0 300px;
   scroll-snap-align: start;
-  background: #fff;
+  background: var(--cream);
   border-radius: 16px;
   padding: clamp(24px, 3vw, 36px);
   box-shadow: 0 4px 20px rgba(0,0,0,.06);
@@ -456,7 +458,7 @@
 .timeline-card .year {
   font-family: 'Fraunces', serif;
   font-size: 1.8rem;
-  color: var(--blue);
+  color: var(--red);
   opacity: 0.6;
 }
 ```
@@ -548,8 +550,8 @@
   margin-bottom: -2px;
 }
 .tab.active {
-  border-bottom-color: var(--blue);
-  color: var(--blue);
+  border-bottom-color: var(--red);
+  color: var(--red);
   font-weight: 600;
 }
 .tab-content { display: none; }
@@ -584,8 +586,7 @@
 .canvas-area:active { cursor: grabbing; }
 .canvas-grid {
   width: 100%; height: 100%;
-  background-image: radial-gradient(circle, rgba(74,124,201,0.13) 1.2px, transparent 1.2px);
-  background-size: 28px 28px;
+  background: var(--cream-dark, #F4F1EC);
 }
 .canvas-transform {
   position: absolute;
@@ -657,7 +658,7 @@
   font-family: 'Fraunces', serif;
   font-size: 1.5rem;
   font-weight: 900;
-  color: rgba(43,127,216,0.12);
+  color: rgba(182,58,63,0.12);
   min-width: 36px;
   transition: all 0.3s ease;
 }
@@ -666,7 +667,7 @@
   font-weight: 700;
 }
 .layout-sticky-mag .nav li.active::before {
-  color: var(--blue);
+  color: var(--red);
   font-size: 1.8rem;
 }
 .steps-content {
@@ -696,10 +697,10 @@
   font-size: 3rem;
   font-weight: 900;
   line-height: 1;
-  color: rgba(43,127,216,0.15);
+  color: rgba(182,58,63,0.15);
 }
-.step-item:nth-child(3n+2) .step-num { color: rgba(244,215,88,0.35); }
-.step-item:nth-child(3n) .step-num { color: rgba(232,74,95,0.2); }
+.step-item:nth-child(3n+2) .step-num { color: rgba(243,214,111,0.35); }
+.step-item:nth-child(3n) .step-num { color: rgba(182,58,63,0.2); }
 .step-item .step-info h4 {
   font-family: 'Noto Serif SC', serif;
   font-size: 1.3rem;
@@ -734,4 +735,4 @@ const stepObserver = new IntersectionObserver((entries) => {
 document.querySelectorAll('.step-observe').forEach(el => stepObserver.observe(el));
 ```
 
-⚠️ 注意：步骤5~10个最合适。超过10个太长，少于5个用横向Step连接线（#7）更紧凑。大图是关键——每一步都必须有一张占满宽度的配图。编号三色轮换（蓝/黄/红）保持节奏。移动端侧栏隐藏，变成纯纵向滚动。
+⚠️ 注意：步骤5~10个最合适。超过10个太长，少于5个用横向Step连接线（#7）更紧凑。大图是关键——每一步都必须有一张占满宽度的配图。编号编辑红/黄色轮换保持节奏。移动端侧栏隐藏，变成纯纵向滚动。
